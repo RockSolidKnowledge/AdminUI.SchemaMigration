@@ -111,7 +111,6 @@ BEGIN TRANSACTION TransactionOne
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20240104155203_DuendeV7SqlServerConfigurationMigration', '6.0.3')
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20240108131028_DuendeV7SqlServerOperationalMigration', '6.0.3')
 	
-	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20171122163718_UserSearchOptimizationExtendedConfigurationDbMigration', '8.0.1');
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20181205163055_ExtendedDataMigration2.3', '8.0.1');
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20190401104724_ClientType', '8.0.1');
 

@@ -108,7 +108,6 @@ BEGIN TRANSACTION TransactionOne
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20220608091949_Duende61Update', '6.0.3')
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20220608093217_Duende61ConfigurationUpdate', '6.0.3')
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20230620153729_Duende63ConfigurationUpdate', '6.0.3')
-	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20230901102018_ClaimValueSearchBugFixes', '6.0.3')
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20240104155203_DuendeV7SqlServerConfigurationMigration', '6.0.3')
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20240108131028_DuendeV7SqlServerOperationalMigration', '6.0.3')
 	

@@ -1,11 +1,11 @@
 BEGIN TRANSACTION TransactionOne
 
-	CREATE TABLE [ExtendedApiResources] (
-		[Id] nvarchar(450) NOT NULL,
-		[ApiResourceName] nvarchar(200) NOT NULL,
-		[NormalizedName] nvarchar(200) NOT NULL,
-		[Reserved] bit NOT NULL,
-		CONSTRAINT [PK_ExtendedApiResources] PRIMARY KEY ([Id])
+	CREATE TABLE [dbo].[ExtendedApiResources] (
+	    [Id]              NVARCHAR (450) NOT NULL,
+	    [ApiResourceName] NVARCHAR (200) NOT NULL,
+	    [NormalizedName]  NVARCHAR (200) NOT NULL,
+	    [Reserved]        BIT            NOT NULL,
+	    CONSTRAINT [PK_ExtendedApiResources] PRIMARY KEY CLUSTERED ([Id] ASC)
 	);
 	
 	CREATE UNIQUE NONCLUSTERED INDEX [ApiNameIndex]
@@ -14,15 +14,15 @@ BEGIN TRANSACTION TransactionOne
 	CREATE UNIQUE NONCLUSTERED INDEX [ApiResourceNameIndex]
 	    ON [dbo].[ExtendedApiResources]([NormalizedName] ASC);
 	
-	CREATE TABLE [ExtendedClients] (
-		[Id] nvarchar(450) NOT NULL,
-		[ClientId] nvarchar(200) NOT NULL,
-		[Description] nvarchar(max) NULL,
-		[NormalizedClientId] nvarchar(200) NOT NULL,
-		[NormalizedClientName] nvarchar(200) NULL,
-		[Reserved] bit NOT NULL,
-		[ClientType] int NULL,
-		CONSTRAINT [PK_ExtendedClients] PRIMARY KEY ([Id])
+	CREATE TABLE [dbo].[ExtendedClients] (
+	    [Id]                   NVARCHAR (450) NOT NULL,
+	    [ClientId]             NVARCHAR (200) NOT NULL,
+	    [Description]          NVARCHAR (MAX) NULL,
+	    [NormalizedClientId]   NVARCHAR (200) NOT NULL,
+	    [NormalizedClientName] NVARCHAR (200) NULL,
+	    [Reserved]             BIT            NOT NULL
+		[ClientType] 		   INT  		  NULL,
+	    CONSTRAINT [PK_ExtendedClients] PRIMARY KEY CLUSTERED ([Id] ASC)
 	);
 	
 	CREATE UNIQUE NONCLUSTERED INDEX [ClientIdIndex]
@@ -49,9 +49,9 @@ BEGIN TRANSACTION TransactionOne
 	    ON [dbo].[ExtendedIdentityResources]([NormalizedName] ASC);
 			
 	
-	CREATE TABLE [ConfigurationEntries] (
-		[Key] nvarchar(450) NOT NULL,
-		[Value] nvarchar(max) NULL,
+	CREATE TABLE [dbo].[ConfigurationEntries] (
+		[Key] 				   NVARCHAR(450) NOT NULL,
+		[Value] 			   NVARCHAR(max) NULL,
 		CONSTRAINT [PK_ConfigurationEntries] PRIMARY KEY ([Key])
 	);
 

@@ -21,6 +21,7 @@ BEGIN TRANSACTION TransactionOne
 	    [NormalizedClientId]   NVARCHAR (200) NOT NULL,
 	    [NormalizedClientName] NVARCHAR (200) NULL,
 	    [Reserved]             BIT            NOT NULL
+		[ClientType] 		   INT  		  NULL,
 	    CONSTRAINT [PK_ExtendedClients] PRIMARY KEY CLUSTERED ([Id] ASC)
 	);
 	
@@ -47,10 +48,33 @@ BEGIN TRANSACTION TransactionOne
 	CREATE UNIQUE NONCLUSTERED INDEX [IdentityResourceNameIndex]
 	    ON [dbo].[ExtendedIdentityResources]([NormalizedName] ASC);
 			
+	
+	CREATE TABLE [dbo].[ConfigurationEntries] (
+		[Key] 				   NVARCHAR(450) NOT NULL,
+		[Value] 			   NVARCHAR(max) NULL,
+		CONSTRAINT [PK_ConfigurationEntries] PRIMARY KEY ([Key])
+	);
+
+	UPDATE [dbo].[Clients]
+										SET [NonEditable] = e.reserved
+										from [dbo].ExtendedClients e
+										WHERE [dbo].[Clients].ClientId = e.ClientId
+
+	UPDATE [dbo].[ApiResources]
+									SET [NonEditable] = e.reserved
+									from [dbo].ExtendedApiResources e
+									WHERE [dbo].[ApiResources].Name = e.ApiResourceName
+
+	UPDATE [dbo].[IdentityResources]
+									SET [NonEditable] = e.reserved
+									from [dbo].ExtendedIdentityResources e
+									WHERE [dbo].IdentityResources.Name = e.IdentityResourceName
+
 	IF (NOT EXISTS (SELECT * 
 	                 FROM INFORMATION_SCHEMA.TABLES 
 	                 WHERE TABLE_SCHEMA = 'dbo' 
 	                 AND  TABLE_NAME = '__EFMigrationsHistory'))
+
 	BEGIN
 		CREATE TABLE [dbo].[__EFMigrationsHistory](
 			[MigrationId] [nvarchar](150) NOT NULL,
@@ -67,6 +91,7 @@ BEGIN TRANSACTION TransactionOne
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20171026080835_InitialSqlServerExtendedConfigurationDbMigration', '2.1.4-rtm-31024')
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20171122163758_UserSearchOptimizationOperationalDbMigration', '2.1.4-rtm-31024')
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20171122163636_UserSearchOptimizationConfigurationDbMigration', '2.1.4-rtm-31024')
+	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20180626100745_ConfigurationEntries', '6.0.3');
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20181109163923_IdentityServer2.3SqlServerConfigurationDbMigration', '2.1.4-rtm-31024')
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20181109164134_IdentityServer2.3SqlServerSqlServerOperationalDbMigration', '2.1.4-rtm-31024')
 
@@ -77,10 +102,16 @@ BEGIN TRANSACTION TransactionOne
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20210105164242_DuendeSqlServerMigrationOperational', '6.0.3')
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20210602110024_PersistedGrantConsumeTimeSqlServerOperationalMigration', '6.0.3')
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20220104130635_DuendeV6SqlServerConfigurationMigration', '6.0.3')
-	
+
+	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20200626131535_InitialSqlServerDataProtectionKeyMigration', '6.0.3')
 	
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20220608091949_Duende61Update', '6.0.3')
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20220608093217_Duende61ConfigurationUpdate', '6.0.3')
-	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20200626131535_InitialSqlServerDataProtectionKeyMigration', '6.0.3')
+	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20230620153729_Duende63ConfigurationUpdate', '6.0.3')
+	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20240104155203_DuendeV7SqlServerConfigurationMigration', '6.0.3')
+	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20240108131028_DuendeV7SqlServerOperationalMigration', '6.0.3')
+	
+	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20181205163055_ExtendedDataMigration2.3', '8.0.1');
+	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20190401104724_ClientType', '8.0.1');
 
 COMMIT TRANSACTION TransactionOne

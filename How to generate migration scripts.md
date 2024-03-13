@@ -17,44 +17,44 @@ Migration scripts in order:
 
 ## SqlServer scripts:
 
-dotnet ef migrations script --context DuendeSqlServerConfigurationDbContext --output ./Migration_Scripts/SqlServer_DuendeSqlServerConfigurationDbContext.txt
-dotnet ef migrations script --context DuendeSqlServerOperationalDbContext --output ./Migration_Scripts/SqlServer_DuendeSqlServerOperationalDbContext.txt
+dotnet ef migrations script --context DuendeSqlServerConfigurationDbContext --output ./Migration_Scripts/SqlServer/Configuration.sql
+dotnet ef migrations script --context DuendeSqlServerOperationalDbContext --output ./Migration_Scripts/SqlServer/Operational.sql
 
-dotnet ef migrations script --context DuendeSqlServerExtendedConfigurationDbContext --output ./Migration_Scripts/SqlServer_DuendeSqlServerExtendedConfigurationDbContext.txt
-dotnet ef migrations script --context SqlServerAuditDbContext --output ./Migration_Scripts/SqlServer_SqlServerAuditDbContext.txt
+dotnet ef migrations script --context DuendeSqlServerExtendedConfigurationDbContext --output ./Migration_Scripts/SqlServer/ExtendedConfiguration.sql
+dotnet ef migrations script --context SqlServerAuditDbContext --output ./Migration_Scripts/SqlServer/Audit.sql
 
-dotnet ef migrations script --context SqlServerIdentityDbContext --output ./Migration_Scripts/SqlServer_SqlServerIdentityDbContext.txt
+dotnet ef migrations script --context SqlServerIdentityDbContext --output ./Migration_Scripts/SqlServer/Identity.sql
 
-dotnet ef migrations script --context SqlServerSamlArtifactDbContext --output ./Migration_Scripts/SqlServer_SqlServerSamlArtifactDbContext.txt
-dotnet ef migrations script --context SqlServerSamlConfigurationDbContext --output ./Migration_Scripts/SqlServer_SqlServerSamlConfigurationDbContext.txt
-dotnet ef migrations script --context SqlServerWsFederationConfigurationDbContext --output ./Migration_Scripts/SqlServer_SqlServerWsFederationConfigurationDbContext.txt
+dotnet ef migrations script --context SqlServerSamlArtifactDbContext --output ./Migration_Scripts/SqlServer/SamlArtifact.sql
+dotnet ef migrations script --context SqlServerSamlConfigurationDbContext --output ./Migration_Scripts/SqlServer/SamlConfiguration.sql
+dotnet ef migrations script --context SqlServerWsFederationConfigurationDbContext --output ./Migration_Scripts/SqlServer/WsFederationConfiguration.sql
 
 
 ## MySql scripts:
 
-dotnet ef migrations script --context DuendeMySqlConfigurationDbContext --output ./Migration_Scripts/MySql_DuendeMySqlConfigurationDbContext.txt
-dotnet ef migrations script --context DuendeMySqlOperationalDbContext --output ./Migration_Scripts/MySql_DuendeMySqlOperationalDbContext.txt
+dotnet ef migrations script --context DuendeMySqlConfigurationDbContext --output ./Migration_Scripts/MySql/Configuration.sql
+dotnet ef migrations script --context DuendeMySqlOperationalDbContext --output ./Migration_Scripts/MySql/Operational.sql
 
-dotnet ef migrations script --context DuendeMySqlExtendedConfigurationDbContext --output ./Migration_Scripts/MySql_DuendeMySqlExtendedConfigurationDbContext.txt
-dotnet ef migrations script --context MySqlAuditDbContext --output ./Migration_Scripts/MySql_MySqlAuditDbContext.txt
+dotnet ef migrations script --context DuendeMySqlExtendedConfigurationDbContext --output ./Migration_Scripts/MySql/ExtendedConfiguration.sql
+dotnet ef migrations script --context MySqlAuditDbContext --output ./Migration_Scripts/MySql/Audit.sql
 
-dotnet ef migrations script --context MySqlIdentityDbContext --output ./Migration_Scripts/MySql_MySqlIdentityDbContext.txt
+dotnet ef migrations script --context MySqlIdentityDbContext --output ./Migration_Scripts/MySql/Identity.sql
 
-dotnet ef migrations script --context MySqlSamlArtifactDbContext --output ./Migration_Scripts/MySql_MySqlSamlArtifactDbContext.txt
-dotnet ef migrations script --context MySqlSamlConfigurationDbContext --output ./Migration_Scripts/MySql_MySqlSamlConfigurationDbContext.txt
-dotnet ef migrations script --context MySqlWsFederationConfigurationDbContext --output ./Migration_Scripts/MySql_MySqlWsFederationConfigurationDbContext.txt
+dotnet ef migrations script --context MySqlSamlArtifactDbContext --output ./Migration_Scripts/MySql/SamlArtifact.sql
+dotnet ef migrations script --context MySqlSamlConfigurationDbContext --output ./Migration_Scripts/MySql/SamlConfiguration.sql
+dotnet ef migrations script --context MySqlWsFederationConfigurationDbContext --output ./Migration_Scripts/MySql/WsFederationConfiguration.sql
 
 
 ## PostgreSql scripts:
 
-dotnet ef migrations script --context DuendePostgreSqlConfigurationDbContext --output ./Migration_Scripts/PostgreSql_DuendePostgreSqlConfigurationDbContext.txt
-dotnet ef migrations script --context DuendePostgreSqlOperationalDbContext --output ./Migration_Scripts/PostgreSql_DuendePostgreSqlOperationalDbContext.txt
+dotnet ef migrations script --context DuendePostgreSqlConfigurationDbContext --output ./Migration_Scripts/PostgreSql/Configuration.sql
+dotnet ef migrations script --context DuendePostgreSqlOperationalDbContext --output ./Migration_Scripts/PostgreSql/Operational.sql
 
-dotnet ef migrations script --context DuendePostgreSqlExtendedConfigurationDbContext --output ./Migration_Scripts/PostgreSql_DuendePostgreSqlExtendedConfigurationDbContext.txt
-dotnet ef migrations script --context PostgreSqlAuditDbContext --output ./Migration_Scripts/PostgreSql_PostgreSqlAuditDbContext.txt
+dotnet ef migrations script --context DuendePostgreSqlExtendedConfigurationDbContext --output ./Migration_Scripts/PostgreSql/ExtendedConfiguration.sql
+dotnet ef migrations script --context PostgreSqlAuditDbContext --output ./Migration_Scripts/PostgreSql/Audit.sql
 
-dotnet ef migrations script --context PostgreSqlIdentityDbContext --output ./Migration_Scripts/PostgreSql_PostgreSqlIdentityDbContext.txt
+dotnet ef migrations script --context PostgreSqlIdentityDbContext --output ./Migration_Scripts/PostgreSql/Identity.sql
 
-dotnet ef migrations script --context PostgreSqlSamlArtifactDbContext --output ./Migration_Scripts/PostgreSql_PostgreSqlSamlArtifactDbContext.txt
-dotnet ef migrations script --context PostgreSqlSamlConfigurationDbContext --output ./Migration_Scripts/PostgreSql_PostgreSqlSamlConfigurationDbContext.txt
-dotnet ef migrations script --context PostgreSqlWsFederationConfigurationDbContext --output ./Migration_Scripts/PostgreSql_PostgreSqlWsFederationConfigurationDbContext.txt
+dotnet ef migrations script --context PostgreSqlSamlArtifactDbContext --output ./Migration_Scripts/PostgreSql/SamlArtifact.sql
+dotnet ef migrations script --context PostgreSqlSamlConfigurationDbContext --output ./Migration_Scripts/PostgreSql/SamlConfiguration.sql
+dotnet ef migrations script --context PostgreSqlWsFederationConfigurationDbContext --output ./Migration_Scripts/PostgreSql/WsFederationConfiguration.sql

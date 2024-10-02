@@ -82,29 +82,5 @@ BEGIN TRANSACTION TransactionOne
       CONSTRAINT [PK_EnumClaimTypeAllowedValues] PRIMARY KEY ([ClaimTypeId], [Value]),
       CONSTRAINT [FK_EnumClaimTypeAllowedValues_AspNetClaimTypes_ClaimTypeId] FOREIGN KEY ([ClaimTypeId]) REFERENCES [AspNetClaimTypes] ([Id]) ON DELETE CASCADE
 	);
-	
-	IF (NOT EXISTS (SELECT * 
-					 FROM INFORMATION_SCHEMA.TABLES 
-					 WHERE TABLE_SCHEMA = 'dbo' 
-					 AND  TABLE_NAME = '__EFMigrationsHistory'))
-	BEGIN
-		CREATE TABLE [dbo].[__EFMigrationsHistory](
-			[MigrationId] [nvarchar](150) NOT NULL,
-			[ProductVersion] [nvarchar](32) NOT NULL,
-		 CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY CLUSTERED 
-		(
-			[MigrationId] ASC
-		)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-		) ON [PRIMARY]
-	END
-
-	INSERT INTO [dbo].[__EFMigrationsHistory]
-	VALUES ('20171026080706_InitialSqlServerIdentityDbMigration', '2.1.4-rtm-31024')
-
-	INSERT INTO [dbo].[__EFMigrationsHistory]
-	VALUES ('20220110161021_ClaimTypeDisplayNameMigration', '2.1.4-rtm-31024')
-	
-	INSERT INTO [dbo].[__EFMigrationsHistory]
-	VALUES ('20210430141851_EnumeratedClaimTypeMigration', '2.1.4-rtm-31024')
 
 COMMIT TRANSACTION TransactionOne

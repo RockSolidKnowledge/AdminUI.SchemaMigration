@@ -94,24 +94,24 @@ BEGIN TRANSACTION TransactionOne
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20180626100745_ConfigurationEntries', '6.0.3');
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20181109163923_IdentityServer2.3SqlServerConfigurationDbMigration', '2.1.4-rtm-31024')
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20181109164134_IdentityServer2.3SqlServerSqlServerOperationalDbMigration', '2.1.4-rtm-31024')
-
-	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20200702075849_V3toV4SqlServerConfigurationDbMigration', '6.0.3')
-	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20200702080430_V3toV4SqlServerOperationalDbMigration', '6.0.3')
-	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20210602104947_IdentityProvidersSqlServerConfigurationMigration', '6.0.3')
-	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20210106132452_DuendeSqlServerConfigurationMigration', '6.0.3')
-	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20210105164242_DuendeSqlServerMigrationOperational', '6.0.3')
-	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20210602110024_PersistedGrantConsumeTimeSqlServerOperationalMigration', '6.0.3')
-	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20220104130635_DuendeV6SqlServerConfigurationMigration', '6.0.3')
+	
+	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20181205163055_ExtendedDataMigration2.3', '8.0.1');
+	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20190401104724_ClientType', '8.0.1');
 
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20200626131535_InitialSqlServerDataProtectionKeyMigration', '6.0.3')
+		
+	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20200702075849_V3toV4SqlServerConfigurationDbMigration', '6.0.3')
+	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20200702080430_V3toV4SqlServerOperationalDbMigration', '6.0.3')
+	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20210106132452_DuendeSqlServerConfigurationMigration', '6.0.3')
+	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20210105164242_DuendeSqlServerMigrationOperational', '6.0.3')
+	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20210602104947_IdentityProvidersSqlServerConfigurationMigration', '6.0.3')
+	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20210602110024_PersistedGrantConsumeTimeSqlServerOperationalMigration', '6.0.3')
+	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20220104130635_DuendeV6SqlServerConfigurationMigration', '6.0.3')
 	
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20220608091949_Duende61Update', '6.0.3')
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20220608093217_Duende61ConfigurationUpdate', '6.0.3')
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20230620153729_Duende63ConfigurationUpdate', '6.0.3')
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20240104155203_DuendeV7SqlServerConfigurationMigration', '6.0.3')
 	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20240108131028_DuendeV7SqlServerOperationalMigration', '6.0.3')
-	
-	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20181205163055_ExtendedDataMigration2.3', '8.0.1');
-	INSERT INTO [dbo].[__EFMigrationsHistory] VALUES ('20190401104724_ClientType', '8.0.1');
 
 COMMIT TRANSACTION TransactionOne

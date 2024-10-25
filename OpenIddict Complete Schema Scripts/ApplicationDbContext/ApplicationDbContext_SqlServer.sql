@@ -91,10 +91,6 @@ GO
 CREATE UNIQUE INDEX [IX_OpenIddictTokens_ReferenceId] ON [OpenIddictTokens] ([ReferenceId]) WHERE [ReferenceId] IS NOT NULL;
 GO
 
-INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20241015135709_InitialApplication_OpenIddict5', N'8.0.5');
-GO
-
 COMMIT;
 GO
 

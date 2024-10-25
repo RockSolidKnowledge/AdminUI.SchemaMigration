@@ -132,8 +132,5 @@ CREATE INDEX "LastNameIndex" ON "AspNetUsers" ("NormalizedLastName");
 
 CREATE UNIQUE INDEX "UserNameIndex" ON "AspNetUsers" ("NormalizedUserName");
 
-INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20241015135339_InitialIdentity_IdentityExpress6', '8.0.5');
-
 COMMIT;
 

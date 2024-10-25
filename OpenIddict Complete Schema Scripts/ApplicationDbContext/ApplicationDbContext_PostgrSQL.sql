@@ -80,8 +80,5 @@ CREATE INDEX "IX_OpenIddictTokens_AuthorizationId" ON "OpenIddictTokens" ("Autho
 
 CREATE UNIQUE INDEX "IX_OpenIddictTokens_ReferenceId" ON "OpenIddictTokens" ("ReferenceId");
 
-INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20241015135345_InitialApplication_OpenIddict5', '8.0.5');
-
 COMMIT;
 

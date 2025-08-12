@@ -18,43 +18,55 @@ Migration scripts in order:
 ## SqlServer scripts:
 
 dotnet ef migrations script --context DuendeSqlServerConfigurationDbContext --output ./Migration_Scripts/SqlServer/Configuration.sql
+
 dotnet ef migrations script --context DuendeSqlServerOperationalDbContext --output ./Migration_Scripts/SqlServer/Operational.sql
 
 dotnet ef migrations script --context DuendeSqlServerExtendedConfigurationDbContext --output ./Migration_Scripts/SqlServer/ExtendedConfiguration.sql
+
 dotnet ef migrations script --context SqlServerAuditDbContext --output ./Migration_Scripts/SqlServer/Audit.sql
 
 dotnet ef migrations script --context SqlServerIdentityDbContext --output ./Migration_Scripts/SqlServer/Identity.sql
 
 dotnet ef migrations script --context SqlServerSamlArtifactDbContext --output ./Migration_Scripts/SqlServer/SamlArtifact.sql
+
 dotnet ef migrations script --context SqlServerSamlConfigurationDbContext --output ./Migration_Scripts/SqlServer/SamlConfiguration.sql
+
 dotnet ef migrations script --context SqlServerWsFederationConfigurationDbContext --output ./Migration_Scripts/SqlServer/WsFederationConfiguration.sql
 
 
 ## MySql scripts:
 
 dotnet ef migrations script --context DuendeMySqlConfigurationDbContext --output ./Migration_Scripts/MySql/Configuration.sql
+
 dotnet ef migrations script --context DuendeMySqlOperationalDbContext --output ./Migration_Scripts/MySql/Operational.sql
 
 dotnet ef migrations script --context DuendeMySqlExtendedConfigurationDbContext --output ./Migration_Scripts/MySql/ExtendedConfiguration.sql
+
 dotnet ef migrations script --context MySqlAuditDbContext --output ./Migration_Scripts/MySql/Audit.sql
 
 dotnet ef migrations script --context MySqlIdentityDbContext --output ./Migration_Scripts/MySql/Identity.sql
 
 dotnet ef migrations script --context MySqlSamlArtifactDbContext --output ./Migration_Scripts/MySql/SamlArtifact.sql
+
 dotnet ef migrations script --context MySqlSamlConfigurationDbContext --output ./Migration_Scripts/MySql/SamlConfiguration.sql
+
 dotnet ef migrations script --context MySqlWsFederationConfigurationDbContext --output ./Migration_Scripts/MySql/WsFederationConfiguration.sql
 
 
 ## PostgreSql scripts:
 
 dotnet ef migrations script --context DuendePostgreSqlConfigurationDbContext --output ./Migration_Scripts/PostgreSql/Configuration.sql
+
 dotnet ef migrations script --context DuendePostgreSqlOperationalDbContext --output ./Migration_Scripts/PostgreSql/Operational.sql
 
 dotnet ef migrations script --context DuendePostgreSqlExtendedConfigurationDbContext --output ./Migration_Scripts/PostgreSql/ExtendedConfiguration.sql
+
 dotnet ef migrations script --context PostgreSqlAuditDbContext --output ./Migration_Scripts/PostgreSql/Audit.sql
 
 dotnet ef migrations script --context PostgreSqlIdentityDbContext --output ./Migration_Scripts/PostgreSql/Identity.sql
 
 dotnet ef migrations script --context PostgreSqlSamlArtifactDbContext --output ./Migration_Scripts/PostgreSql/SamlArtifact.sql
+
 dotnet ef migrations script --context PostgreSqlSamlConfigurationDbContext --output ./Migration_Scripts/PostgreSql/SamlConfiguration.sql
+
 dotnet ef migrations script --context PostgreSqlWsFederationConfigurationDbContext --output ./Migration_Scripts/PostgreSql/WsFederationConfiguration.sql

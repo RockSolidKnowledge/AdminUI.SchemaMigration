@@ -140,6 +140,7 @@ CREATE INDEX [CountIndex] ON [AspNetUsers] ([IsBlocked], [IsDeleted]);
 
 CREATE INDEX [CountIndexReversed] ON [AspNetUsers] ([IsDeleted], [IsBlocked]);
 
+GO
 CREATE PROCEDURE [FindAllUsersWithCount] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -188,6 +189,7 @@ BEGIN
 END
 
 
+GO
 CREATE PROCEDURE [FindActiveUsersWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -238,6 +240,7 @@ BEGIN
 END
 
 
+GO
 CREATE PROCEDURE [FindActiveOrBlockedWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -288,6 +291,7 @@ BEGIN
 END
 
 
+GO
 CREATE PROCEDURE [FindActiveOrDeletedUsersWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -338,6 +342,7 @@ BEGIN
 END
 
 
+GO
 CREATE PROCEDURE [FindBlockedOrDeletedWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -388,6 +393,7 @@ BEGIN
 END
 
 
+GO
 CREATE PROCEDURE [FindBlockedUsersWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -438,6 +444,7 @@ BEGIN
 END
 
 
+GO
 CREATE PROCEDURE [FindDeletedUsersWithCount] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -506,6 +513,7 @@ SELECT        Id, Email, FirstName, LastName, UserName, NormalizedFirstName, Nor
 FROM          ' + @SchemaName + '.AspNetUsers
 WHERE        (IsBlocked = 0) AND (IsDeleted = 0)';
 EXEC sp_executesql @CreateViewSql;
+GO
 
 
 DECLARE @SchemaName NVARCHAR(256);
@@ -519,6 +527,7 @@ SET @CreateIndexSql = 'CREATE UNIQUE CLUSTERED INDEX [ClusteredIndex-20190723-13
    [NormalizedEmail] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]';
 EXEC sp_executesql @CreateIndexSql;
+GO
 
 
 DECLARE @SchemaName NVARCHAR(256);
@@ -632,6 +641,7 @@ Begin DesignProperties =
    End
 End
 ' , @level0type=N'SCHEMA',@level0name=@SchemaName, @level1type=N'VIEW',@level1name=N'ActiveUsers'
+GO
 
 
 DECLARE @SchemaName NVARCHAR(256);
@@ -640,6 +650,7 @@ SET @SchemaName = SCHEMA_NAME();
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=@SchemaName, @level1type=N'VIEW',@level1name=N'ActiveUsers'
 
 
+GO
 CREATE PROCEDURE [FindActiveByRoleWithCount]
 	@RoleId nvarchar(450),
 	@SearchTerm nvarchar(256) = null, 
@@ -710,6 +721,7 @@ BEGIN
 		END
 END
 
+GO
 CREATE PROCEDURE FindActiveUsersInRoleAndAllActiveUsersWithCount
 	@RoleId nvarchar(450),
 	@SearchTerm nvarchar(256) = null, 
@@ -806,6 +818,7 @@ COMMIT;
 GO
 
 BEGIN TRANSACTION;
+GO
 CREATE OR ALTER PROCEDURE [FindAllUsersWithCount] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -903,6 +916,7 @@ BEGIN
 END
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveUsersWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -1007,6 +1021,7 @@ END
 
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveOrBlockedWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -1109,6 +1124,7 @@ END
 
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveOrDeletedUsersWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -1211,6 +1227,7 @@ BEGIN
 END
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindBlockedOrDeletedWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -1312,6 +1329,7 @@ BEGIN
 		END
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindBlockedUsersWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -1413,6 +1431,7 @@ BEGIN
 		END
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindDeletedUsersWithCount] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -1522,6 +1541,7 @@ COMMIT;
 GO
 
 BEGIN TRANSACTION;
+GO
 CREATE OR ALTER PROCEDURE [FindActiveByRoleWithCount]
 	@RoleId nvarchar(450),
 	@SearchTerm nvarchar(256) = null, 
@@ -1638,6 +1658,7 @@ BEGIN
 		END
 END
 
+GO
 CREATE OR ALTER PROCEDURE FindActiveUsersInRoleAndAllActiveUsersWithCount
 	@RoleId nvarchar(450),
 	@SearchTerm nvarchar(256) = null, 
@@ -1799,6 +1820,7 @@ COMMIT;
 GO
 
 BEGIN TRANSACTION;
+GO
 CREATE OR ALTER PROCEDURE [FindAllUsersWithCount] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -1896,6 +1918,7 @@ BEGIN
 END
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveUsersWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -2000,6 +2023,7 @@ END
 
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveOrBlockedWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -2102,6 +2126,7 @@ END
 
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveOrDeletedUsersWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -2204,6 +2229,7 @@ BEGIN
 END
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindBlockedOrDeletedWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -2305,6 +2331,7 @@ BEGIN
 		END
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindBlockedUsersWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -2406,6 +2433,7 @@ BEGIN
 		END
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindDeletedUsersWithCount] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -2524,6 +2552,7 @@ COMMIT;
 GO
 
 BEGIN TRANSACTION;
+GO
 CREATE PROCEDURE [FindAllUsersWithCountWithClaimValueSearch] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -2643,6 +2672,7 @@ BEGIN
 END
 
 
+GO
 CREATE PROCEDURE [FindActiveUsersWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -2763,6 +2793,7 @@ END
 
 
 
+GO
 CREATE PROCEDURE [FindActiveOrBlockedWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -2880,6 +2911,7 @@ END
 
 
 
+GO
 CREATE PROCEDURE [FindActiveOrDeletedUsersWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -2998,6 +3030,7 @@ BEGIN
 END
 
 
+GO
 CREATE PROCEDURE [FindBlockedOrDeletedWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -3114,6 +3147,7 @@ BEGIN
 		END
 END
 
+GO
 CREATE PROCEDURE [FindBlockedUsersWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -3231,6 +3265,7 @@ BEGIN
 		END
 END
 
+GO
 CREATE PROCEDURE [FindDeletedUsersWithCountWithClaimValueSearch] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -3356,6 +3391,7 @@ COMMIT;
 GO
 
 BEGIN TRANSACTION;
+GO
 CREATE OR ALTER PROCEDURE [FindActiveOrBlockedWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -3426,6 +3462,7 @@ BEGIN
     END
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveOrBlockedWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -3515,6 +3552,7 @@ END
 
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveOrDeletedUsersWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -3586,6 +3624,7 @@ BEGIN
 END
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveOrDeletedUsersWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -3676,6 +3715,7 @@ BEGIN
 END
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveByRoleWithCount]
 	@RoleId nvarchar(450),
 	@SearchTerm nvarchar(256) = null, 
@@ -3766,6 +3806,7 @@ BEGIN
 		END
 END
 
+GO
 CREATE OR ALTER PROCEDURE FindActiveUsersInRoleAndAllActiveUsersWithCount
 	@RoleId nvarchar(450),
 	@SearchTerm nvarchar(256) = null, 
@@ -3873,6 +3914,7 @@ BEGIN
 	    END
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveUsersWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -3946,6 +3988,7 @@ END
 
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveUsersWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -4036,6 +4079,7 @@ END
 
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindAllUsersWithCount] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -4106,6 +4150,7 @@ BEGIN
 END
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindAllUsersWithCountWithClaimValueSearch] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -4194,6 +4239,7 @@ BEGIN
 END
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindBlockedOrDeletedWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -4264,6 +4310,7 @@ BEGIN
 	END
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindBlockedOrDeletedWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -4351,6 +4398,7 @@ BEGIN
 	END
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindBlockedUsersWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -4421,6 +4469,7 @@ BEGIN
 	END
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindBlockedUsersWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -4508,6 +4557,7 @@ BEGIN
 	END
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindDeletedUsersWithCount] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -4579,6 +4629,7 @@ BEGIN
 END
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindDeletedUsersWithCountWithClaimValueSearch] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -4674,6 +4725,7 @@ COMMIT;
 GO
 
 BEGIN TRANSACTION;
+GO
 CREATE OR ALTER PROCEDURE [FindActiveOrBlockedWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -4763,6 +4815,7 @@ END
 
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveOrDeletedUsersWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -4853,6 +4906,7 @@ BEGIN
 END
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveUsersWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -4943,6 +4997,7 @@ END
 
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindAllUsersWithCountWithClaimValueSearch] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -5031,6 +5086,7 @@ BEGIN
 END
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindBlockedOrDeletedWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -5118,6 +5174,7 @@ BEGIN
 	END
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindBlockedUsersWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -5205,6 +5262,7 @@ BEGIN
 	END
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindDeletedUsersWithCountWithClaimValueSearch] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -5326,6 +5384,7 @@ DROP PROCEDURE [FindActiveByRoleWithCount];
 DROP PROCEDURE [FindActiveUsersInRoleAndAllActiveUsersWithCount];
 
 
+GO
 CREATE PROCEDURE [FindUsersWithCount]
     @SearchTerm nvarchar(256),
     @PageNumber int,
@@ -5474,6 +5533,7 @@ BEGIN
     DROP TABLE #SearchResults;
 END
 
+GO
 CREATE PROCEDURE [FindActiveByRoleWithCount]
     @RoleId nvarchar(450),
     @SearchTerm nvarchar(256) = NULL,
@@ -5575,6 +5635,7 @@ BEGIN
     DROP TABLE #FilteredUsersInRole;
 END
 
+GO
 CREATE PROCEDURE [FindActiveWithIsInRoleAndCount]
     @RoleId nvarchar(450),
     @SearchTerm nvarchar(256) = NULL,
@@ -5687,6 +5748,7 @@ COMMIT;
 GO
 
 BEGIN TRANSACTION;
+GO
 CREATE OR ALTER PROCEDURE [FindUsersWithCount]
     @SearchTerm nvarchar(256),
     @PageNumber int,
@@ -5835,6 +5897,7 @@ BEGIN
     DROP TABLE #SearchResults;
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveByRoleWithCount]
     @RoleId nvarchar(450),
     @SearchTerm nvarchar(256) = NULL,
@@ -5936,6 +5999,7 @@ BEGIN
     DROP TABLE #FilteredUsersInRole;
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveWithIsInRoleAndCount]
     @RoleId nvarchar(450),
     @SearchTerm nvarchar(256) = NULL,

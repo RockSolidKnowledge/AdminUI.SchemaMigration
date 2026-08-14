@@ -558,19 +558,18 @@ FROM ApiScopes
 -- ApiResources
 
 ALTER TABLE ApiResources 
-	ADD AllowedAccessTokenSigningAlgorithms NVARCHAR (100)
-	NULL
-	
+    ADD AllowedAccessTokenSigningAlgorithms NVARCHAR (100) NULL;
+    
 ALTER TABLE ApiResources 
-	ADD ShowInDiscoveryDocument BIT
-	NULL
+    ADD ShowInDiscoveryDocument BIT NULL;
+GO
 
-	
-UPDATE ApiResources SET ShowInDiscoveryDocument = 0
+UPDATE ApiResources SET ShowInDiscoveryDocument = 0;
 
 ALTER TABLE ApiResources 
-	ALTER COLUMN ShowInDiscoveryDocument BIT NOT NULL
-	
+	ALTER COLUMN ShowInDiscoveryDocument BIT NOT NULL;
+
+GO
 
 
 -- ApiScopeClaims
@@ -603,7 +602,7 @@ DROP INDEX IX_ApiScopes_ApiResourceId
 ALTER TABLE ApiScopes 
 	ADD [Enabled] BIT NULL
 
-
+GO
 
 UPDATE ApiScopes SET [Enabled] = 1
 
@@ -613,7 +612,7 @@ ALTER TABLE ApiScopes
 ALTER TABLE ApiScopes 
 	ALTER COLUMN Enabled BIT NOT NULL;
 
-
+GO
 
 -- Clients
 
@@ -623,13 +622,14 @@ ALTER TABLE Clients
 ALTER TABLE Clients
 	ADD RequireRequestObject BIT NULL
 
+GO
 
 UPDATE Clients SET RequireRequestObject = 0
 	
 ALTER TABLE Clients
 	ALTER COLUMN RequireRequestObject BIT NOT NULL
 
-	
+GO
 
 -- Delete Old Tables
 

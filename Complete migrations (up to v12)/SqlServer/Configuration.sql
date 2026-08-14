@@ -231,14 +231,14 @@ CREATE INDEX [IX_IdentityClaims_IdentityResourceId] ON [IdentityClaims] ([Identi
 CREATE UNIQUE INDEX [IX_IdentityResources_Name] ON [IdentityResources] ([Name]);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20171026080114_InitialSqlServerConfigurationDbMigration', N'10.0.8');
+VALUES (N'20171026080114_InitialSqlServerConfigurationDbMigration', N'10.0.11');
 
 COMMIT;
 GO
 
 BEGIN TRANSACTION;
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20171122163636_UserSearchOptimizationConfigurationDbMigration', N'10.0.8');
+VALUES (N'20171122163636_UserSearchOptimizationConfigurationDbMigration', N'10.0.11');
 
 COMMIT;
 GO
@@ -331,7 +331,7 @@ CREATE INDEX [IX_ApiProperties_ApiResourceId] ON [ApiProperties] ([ApiResourceId
 CREATE INDEX [IX_IdentityProperties_IdentityResourceId] ON [IdentityProperties] ([IdentityResourceId]);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20181109163923_IdentityServer2.3SqlServerConfigurationDbMigration', N'10.0.8');
+VALUES (N'20181109163923_IdentityServer2.3SqlServerConfigurationDbMigration', N'10.0.11');
 
 COMMIT;
 GO
@@ -642,7 +642,7 @@ DROP TABLE IdentityProperties
 COMMIT TRANSACTION
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20200702075849_V3toV4SqlServerConfigurationDbMigration', N'10.0.8');
+VALUES (N'20200702075849_V3toV4SqlServerConfigurationDbMigration', N'10.0.11');
 
 COMMIT;
 GO
@@ -651,7 +651,7 @@ BEGIN TRANSACTION;
 ALTER TABLE [ApiResources] ADD [RequireResourceIndicator] bit NOT NULL DEFAULT CAST(0 AS bit);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20210106132452_DuendeSqlServerConfigurationMigration', N'10.0.8');
+VALUES (N'20210106132452_DuendeSqlServerConfigurationMigration', N'10.0.11');
 
 COMMIT;
 GO
@@ -668,7 +668,7 @@ CREATE TABLE [IdentityProviders] (
 );
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20210602104947_IdentityProvidersSqlServerConfigurationMigration', N'10.0.8');
+VALUES (N'20210602104947_IdentityProvidersSqlServerConfigurationMigration', N'10.0.11');
 
 COMMIT;
 GO
@@ -773,7 +773,7 @@ CREATE UNIQUE INDEX [IX_ApiResourceProperties_ApiResourceId_Key] ON [ApiResource
 CREATE UNIQUE INDEX [IX_ApiResourceClaims_ApiResourceId_Type] ON [ApiResourceClaims] ([ApiResourceId], [Type]);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20220104130635_DuendeV6SqlServerConfigurationMigration', N'10.0.8');
+VALUES (N'20220104130635_DuendeV6SqlServerConfigurationMigration', N'10.0.11');
 
 COMMIT;
 GO
@@ -782,7 +782,7 @@ BEGIN TRANSACTION;
 ALTER TABLE [Clients] ADD [CoordinateLifetimeWithUserSession] bit NULL;
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20220608093217_Duende61ConfigurationUpdate', N'10.0.8');
+VALUES (N'20220608093217_Duende61ConfigurationUpdate', N'10.0.11');
 
 COMMIT;
 GO
@@ -797,7 +797,7 @@ ALTER TABLE [Clients] ADD [InitiateLoginUri] nvarchar(2000) NULL;
 ALTER TABLE [Clients] ADD [RequireDPoP] bit NOT NULL DEFAULT CAST(0 AS bit);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20230620153729_Duende63ConfigurationUpdate', N'10.0.8');
+VALUES (N'20230620153729_Duende63ConfigurationUpdate', N'10.0.11');
 
 COMMIT;
 GO
@@ -808,7 +808,7 @@ ALTER TABLE [Clients] ADD [PushedAuthorizationLifetime] int NULL;
 ALTER TABLE [Clients] ADD [RequirePushedAuthorization] bit NOT NULL DEFAULT CAST(0 AS bit);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20240104155203_DuendeV7SqlServerConfigurationMigration', N'10.0.8');
+VALUES (N'20240104155203_DuendeV7SqlServerConfigurationMigration', N'10.0.11');
 
 COMMIT;
 GO

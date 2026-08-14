@@ -65,7 +65,7 @@ CREATE INDEX "IX_ServiceProviderSignCertificates_ServiceProviderId" ON "ServiceP
 CREATE INDEX "IX_ServiceProviderSingleLogoutServices_ServiceProviderId" ON "ServiceProviderSingleLogoutServices" ("ServiceProviderId");
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20190305133319_PostgreSqlSaml2PInitial', '10.0.8');
+VALUES ('20190305133319_PostgreSqlSaml2PInitial', '10.0.11');
 
 COMMIT;
 
@@ -73,7 +73,7 @@ START TRANSACTION;
 ALTER TABLE "ServiceProviders" ADD "AllowIdpInitiatedSso" boolean NOT NULL DEFAULT FALSE;
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20200225104719_Added AllowIdpInitiatedSso', '10.0.8');
+VALUES ('20200225104719_Added AllowIdpInitiatedSso', '10.0.11');
 
 COMMIT;
 
@@ -83,7 +83,7 @@ ALTER TABLE "ServiceProviders" ADD "RequireAuthenticationRequestsSigned" boolean
 ALTER TABLE "ServiceProviders" RENAME COLUMN "RequireSamlRequestDestination" TO "RequireSamlMessageDestination";
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20200914074950_RskSamlV3', '10.0.8');
+VALUES ('20200914074950_RskSamlV3', '10.0.11');
 
 COMMIT;
 
@@ -110,7 +110,7 @@ CREATE TABLE "ServiceProviderArtifactResolutionServices" (
 CREATE INDEX "IX_ServiceProviderArtifactResolutionServices_ServiceProviderId" ON "ServiceProviderArtifactResolutionServices" ("ServiceProviderId");
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20220128115407_RskSamlPackageUpdate', '10.0.8');
+VALUES ('20220128115407_RskSamlPackageUpdate', '10.0.11');
 
 COMMIT;
 

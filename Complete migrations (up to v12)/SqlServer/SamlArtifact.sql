@@ -22,7 +22,7 @@ CREATE TABLE [SamlArtifacts] (
 CREATE INDEX [IX_SamlArtifacts_Expiration] ON [SamlArtifacts] ([Expiration]);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20220114164649_SqlServerSamlArtifactInitialMigration', N'10.0.8');
+VALUES (N'20220114164649_SqlServerSamlArtifactInitialMigration', N'10.0.11');
 
 COMMIT;
 GO

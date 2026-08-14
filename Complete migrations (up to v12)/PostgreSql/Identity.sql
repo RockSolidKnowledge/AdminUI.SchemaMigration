@@ -118,7 +118,7 @@ CREATE INDEX "EmailIndex" ON "AspNetUsers" ("NormalizedEmail");
 CREATE UNIQUE INDEX "UserNameIndex" ON "AspNetUsers" ("NormalizedUserName");
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20171026081544_InitialPostgreSqlIdentityDbMigration', '10.0.8');
+VALUES ('20171026081544_InitialPostgreSqlIdentityDbMigration', '10.0.11');
 
 COMMIT;
 
@@ -136,7 +136,7 @@ CREATE INDEX "CountIndex" ON "AspNetUsers" ("IsBlocked", "IsDeleted");
 CREATE INDEX "CountIndexReversed" ON "AspNetUsers" ("IsDeleted", "IsBlocked");
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20171122162832_UserSearchOptimizationMigration', '10.0.8');
+VALUES ('20171122162832_UserSearchOptimizationMigration', '10.0.11');
 
 COMMIT;
 
@@ -149,7 +149,7 @@ CREATE TABLE "EnumClaimTypeAllowedValues" (
 );
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20210430142540_EnumeratedClaimTypeMigration', '10.0.8');
+VALUES ('20210430142540_EnumeratedClaimTypeMigration', '10.0.11');
 
 COMMIT;
 
@@ -157,7 +157,7 @@ START TRANSACTION;
 ALTER TABLE "AspNetClaimTypes" ADD "DisplayName" text;
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20220112114931_ClaimTypeDisplayNameMigration', '10.0.8');
+VALUES ('20220112114931_ClaimTypeDisplayNameMigration', '10.0.11');
 
 COMMIT;
 

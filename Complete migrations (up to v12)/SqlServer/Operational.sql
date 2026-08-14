@@ -23,14 +23,14 @@ CREATE TABLE [PersistedGrants] (
 CREATE INDEX [IX_PersistedGrants_SubjectId_ClientId_Type] ON [PersistedGrants] ([SubjectId], [ClientId], [Type]);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20171026080756_InitialSqlServerOperationalDbMigration', N'10.0.8');
+VALUES (N'20171026080756_InitialSqlServerOperationalDbMigration', N'10.0.11');
 
 COMMIT;
 GO
 
 BEGIN TRANSACTION;
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20171122163758_UserSearchOptimizationOperationalDbMigration', N'10.0.8');
+VALUES (N'20171122163758_UserSearchOptimizationOperationalDbMigration', N'10.0.11');
 
 COMMIT;
 GO
@@ -52,7 +52,7 @@ CREATE UNIQUE INDEX [IX_DeviceCodes_DeviceCode] ON [DeviceCodes] ([DeviceCode]);
 CREATE UNIQUE INDEX [IX_DeviceCodes_UserCode] ON [DeviceCodes] ([UserCode]);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20181109164134_IdentityServer2.3SqlServerSqlServerOperationalDbMigration', N'10.0.8');
+VALUES (N'20181109164134_IdentityServer2.3SqlServerSqlServerOperationalDbMigration', N'10.0.11');
 
 COMMIT;
 GO
@@ -90,7 +90,7 @@ CREATE NONCLUSTERED INDEX IX_PersistedGrants_SubjectId_SessionId_Type
 COMMIT TRANSACTION;
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20200702080430_V3toV4SqlServerOperationalDbMigration', N'10.0.8');
+VALUES (N'20200702080430_V3toV4SqlServerOperationalDbMigration', N'10.0.11');
 
 COMMIT;
 GO
@@ -111,7 +111,7 @@ CREATE TABLE [Keys] (
 CREATE INDEX [IX_Keys_Use] ON [Keys] ([Use]);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20210105164242_DuendeSqlServerMigrationOperational', N'10.0.8');
+VALUES (N'20210105164242_DuendeSqlServerMigrationOperational', N'10.0.11');
 
 COMMIT;
 GO
@@ -120,7 +120,7 @@ BEGIN TRANSACTION;
 CREATE INDEX [IX_PersistedGrants_ConsumedTime] ON [PersistedGrants] ([ConsumedTime]);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20210602110024_PersistedGrantConsumeTimeSqlServerOperationalMigration', N'10.0.8');
+VALUES (N'20210602110024_PersistedGrantConsumeTimeSqlServerOperationalMigration', N'10.0.11');
 
 COMMIT;
 GO
@@ -167,7 +167,7 @@ CREATE INDEX [IX_ServerSideSessions_SessionId] ON [ServerSideSessions] ([Session
 CREATE INDEX [IX_ServerSideSessions_SubjectId] ON [ServerSideSessions] ([SubjectId]);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20220608091949_Duende61Update', N'10.0.8');
+VALUES (N'20220608091949_Duende61Update', N'10.0.11');
 
 COMMIT;
 GO
@@ -194,7 +194,7 @@ CREATE TABLE [PushedAuthorizationRequests] (
 );
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20240108131028_DuendeV7SqlServerOperationalMigration', N'10.0.8');
+VALUES (N'20240108131028_DuendeV7SqlServerOperationalMigration', N'10.0.11');
 
 COMMIT;
 GO
@@ -225,7 +225,7 @@ CREATE INDEX [IX_PushedAuthorizationRequests_ExpiresAtUtc] ON [PushedAuthorizati
 CREATE UNIQUE INDEX [IX_PushedAuthorizationRequests_ReferenceValueHash] ON [PushedAuthorizationRequests] ([ReferenceValueHash]);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20250121150503_DuendeV7.1SqlServerOperationalMigration', N'10.0.8');
+VALUES (N'20250121150503_DuendeV7.1SqlServerOperationalMigration', N'10.0.11');
 
 COMMIT;
 GO

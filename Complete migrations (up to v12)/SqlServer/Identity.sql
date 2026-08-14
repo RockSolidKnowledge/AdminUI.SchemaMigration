@@ -122,7 +122,7 @@ CREATE INDEX [EmailIndex] ON [AspNetUsers] ([NormalizedEmail]);
 CREATE UNIQUE CLUSTERED INDEX [UserNameIndex] ON [AspNetUsers] ([NormalizedUserName]);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20171026080706_InitialSqlServerIdentityDbMigration', N'10.0.8');
+VALUES (N'20171026080706_InitialSqlServerIdentityDbMigration', N'10.0.11');
 
 COMMIT;
 GO
@@ -489,7 +489,7 @@ END
 
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20171122162730_UserSearchOptimizationMigration', N'10.0.8');
+VALUES (N'20171122162730_UserSearchOptimizationMigration', N'10.0.11');
 
 COMMIT;
 GO
@@ -800,7 +800,7 @@ BEGIN
 END
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20190723135545_RoleSearchOptimizationMigration', N'10.0.8');
+VALUES (N'20190723135545_RoleSearchOptimizationMigration', N'10.0.11');
 
 COMMIT;
 GO
@@ -1516,7 +1516,7 @@ END
 
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20200706104335_UserSearchOptimizationUpdateMigration', N'10.0.8');
+VALUES (N'20200706104335_UserSearchOptimizationUpdateMigration', N'10.0.11');
 
 COMMIT;
 GO
@@ -1779,7 +1779,7 @@ BEGIN
 END
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20200706104406_RoleSearchOptimizationUpdateMigration', N'10.0.8');
+VALUES (N'20200706104406_RoleSearchOptimizationUpdateMigration', N'10.0.11');
 
 COMMIT;
 GO
@@ -1793,7 +1793,7 @@ CREATE TABLE [EnumClaimTypeAllowedValues] (
 );
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20210430141851_EnumeratedClaimTypeMigration', N'10.0.8');
+VALUES (N'20210430141851_EnumeratedClaimTypeMigration', N'10.0.11');
 
 COMMIT;
 GO
@@ -2509,7 +2509,7 @@ END
 
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20211209115717_AddingIdToStoredProceduresMigration', N'10.0.8');
+VALUES (N'20211209115717_AddingIdToStoredProceduresMigration', N'10.0.11');
 
 COMMIT;
 GO
@@ -2518,7 +2518,7 @@ BEGIN TRANSACTION;
 ALTER TABLE [AspNetClaimTypes] ADD [DisplayName] nvarchar(max) NULL;
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20220110161021_ClaimTypeDisplayNameMigration', N'10.0.8');
+VALUES (N'20220110161021_ClaimTypeDisplayNameMigration', N'10.0.11');
 
 COMMIT;
 GO
@@ -3350,7 +3350,7 @@ END
 
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20220225154308_ClaimValueSearchMigration', N'10.0.8');
+VALUES (N'20220225154308_ClaimValueSearchMigration', N'10.0.11');
 
 COMMIT;
 GO
@@ -4668,7 +4668,7 @@ END
 
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20230901102018_ClaimValueSearchBugFixes', N'10.0.8');
+VALUES (N'20230901102018_ClaimValueSearchBugFixes', N'10.0.11');
 
 COMMIT;
 GO
@@ -5294,7 +5294,7 @@ END
 
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20250126152936_ClaimValueSearchRepeatedResultsBugFix', N'10.0.8');
+VALUES (N'20250126152936_ClaimValueSearchRepeatedResultsBugFix', N'10.0.11');
 
 COMMIT;
 GO
@@ -5681,368 +5681,7 @@ BEGIN
 END
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20260213115004_StoredProcedureRefactor', N'10.0.8');
-
-COMMIT;
-GO
-
-BEGIN TRANSACTION;
-CREATE OR ALTER PROCEDURE [FindUsersWithCount]
-    @SearchTerm nvarchar(256),
-    @PageNumber int,
-    @PageSize int,
-    @StateFilter nvarchar(256),
-    @IncludeClaims int
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    -------------------------------------------------------
-    -- 1. SETUP & INPUT CLEANING
-    -------------------------------------------------------
-    DECLARE @SearchTermPrefix nvarchar(258) = UPPER(@SearchTerm) + N'%';
-    DECLARE @SpacePos int = CHARINDEX(' ', @SearchTerm);
-    DECLARE @FirstName nvarchar(258);
-    DECLARE @LastName nvarchar(258);
-    DECLARE @SearchTermLower nvarchar(258);
-
-    IF @SpacePos > 0
-    BEGIN
-        SET @FirstName = UPPER(LEFT(@SearchTerm, @SpacePos - 1)) + N'%';
-        SET @LastName  = UPPER(SUBSTRING(@SearchTerm, @SpacePos + 1, LEN(@SearchTerm))) + N'%';
-    END
-
-    IF @IncludeClaims > 0
-        SET @SearchTermLower = LOWER(@SearchTerm) + N'%';
-
-    CREATE TABLE #SearchResults
-    (
-        [Id]       nvarchar(450) NOT NULL PRIMARY KEY,
-        [UserName] nvarchar(256) NULL
-    );
-
-    -------------------------------------------------------
-    -- 2. BUILD STATE FILTER
-    -------------------------------------------------------
-    -- NOTE: @StateFilter is validated against a closed set of
-    -- known values — no raw user input is concatenated.
-    DECLARE @CurrentSchema nvarchar(520) = QUOTENAME(OBJECT_SCHEMA_NAME(@@PROCID));
-
-    DECLARE @StateFilterSql nvarchar(256) = N'';
-    IF @StateFilter = 'Active'
-        SET @StateFilterSql = N'AND v.[IsBlocked] = 0 AND v.[IsDeleted] = 0';
-    ELSE IF @StateFilter = 'Blocked'
-        SET @StateFilterSql = N'AND v.[IsBlocked] = 1';
-    ELSE IF @StateFilter = 'Deleted'
-        SET @StateFilterSql = N'AND v.[IsDeleted] = 1';
-    ELSE IF @StateFilter = 'ActiveOrBlocked'
-        SET @StateFilterSql = N'AND v.[IsDeleted] = 0';
-    ELSE IF @StateFilter = 'ActiveOrDeleted'
-        SET @StateFilterSql = N'AND v.[IsBlocked] = 0';
-    ELSE IF @StateFilter = 'BlockedOrDeleted'
-        SET @StateFilterSql = N'AND (v.[IsDeleted] = 1 OR v.[IsBlocked] = 1)';
-
-    -------------------------------------------------------
-    -- 3. THE SEARCH (RUNS EXACTLY ONCE)
-    -------------------------------------------------------
-    DECLARE @Sql nvarchar(max);
-
-    IF @IncludeClaims > 0
-    BEGIN
-        SET @Sql = N'
-        INSERT INTO #SearchResults ([Id], [UserName])
-        SELECT v.[Id], v.[UserName]
-        FROM ' + @CurrentSchema + N'.[AspNetUsers] v
-        WHERE (
-                  v.[NormalizedUserName]  LIKE @p_SearchTermPrefix
-               OR v.[NormalizedEmail]     LIKE @p_SearchTermPrefix
-               OR v.[NormalizedFirstName] LIKE @p_SearchTermPrefix
-               OR v.[NormalizedLastName]  LIKE @p_SearchTermPrefix
-               OR v.[Id]                  LIKE @p_SearchTermPrefix
-               OR (@p_SpacePos > 0
-                   AND v.[NormalizedFirstName] LIKE @p_FirstName
-                   AND v.[NormalizedLastName]  LIKE @p_LastName)
-               OR EXISTS (
-                   SELECT 1
-                   FROM ' + @CurrentSchema + N'.[AspNetUserClaims] c
-                   WHERE c.[UserId] = v.[Id]
-                     AND c.[ClaimValue] LIKE @p_SearchTermLower
-               )
-              ) ' + @StateFilterSql + N'
-        OPTION (RECOMPILE);';
-    END
-    ELSE
-    BEGIN
-        SET @Sql = N'
-        INSERT INTO #SearchResults ([Id], [UserName])
-        SELECT v.[Id], v.[UserName]
-        FROM ' + @CurrentSchema + N'.[AspNetUsers] v
-        WHERE (
-                  v.[NormalizedUserName]  LIKE @p_SearchTermPrefix
-               OR v.[NormalizedEmail]     LIKE @p_SearchTermPrefix
-               OR v.[NormalizedFirstName] LIKE @p_SearchTermPrefix
-               OR v.[NormalizedLastName]  LIKE @p_SearchTermPrefix
-               OR v.[Id]                  LIKE @p_SearchTermPrefix
-               OR (@p_SpacePos > 0
-                   AND v.[NormalizedFirstName] LIKE @p_FirstName
-                   AND v.[NormalizedLastName]  LIKE @p_LastName)
-              ) ' + @StateFilterSql + N'
-        OPTION (RECOMPILE);';
-    END
-
-    EXEC sp_executesql @Sql,
-        N'@p_SearchTermPrefix nvarchar(258), @p_SpacePos int, @p_FirstName nvarchar(258), @p_LastName nvarchar(258), @p_SearchTermLower nvarchar(258)',
-        @p_SearchTermPrefix = @SearchTermPrefix,
-        @p_SpacePos = @SpacePos,
-        @p_FirstName = @FirstName,
-        @p_LastName = @LastName,
-        @p_SearchTermLower = @SearchTermLower;
-
-    -------------------------------------------------------
-    -- 4. RESULT SET 1: THE COUNT
-    -------------------------------------------------------
-    SELECT COUNT(*) FROM #SearchResults;
-
-    -------------------------------------------------------
-    -- 5. RESULT SET 2: THE DATA
-    -------------------------------------------------------
-    SELECT u.[Id],
-           u.[AccessFailedCount],
-           u.[ConcurrencyStamp],
-           u.[Email],
-           u.[EmailConfirmed],
-           u.[FirstName],
-           u.[IsBlocked],
-           u.[IsDeleted],
-           u.[LastName],
-           u.[LockoutEnabled],
-           u.[LockoutEnd],
-           u.[NormalizedEmail],
-           u.[NormalizedFirstName],
-           u.[NormalizedLastName],
-           u.[NormalizedUserName],
-           u.[PasswordHash],
-           u.[PhoneNumber],
-           u.[PhoneNumberConfirmed],
-           u.[SecurityStamp],
-           u.[TwoFactorEnabled],
-           u.[UserName]
-    FROM #SearchResults t
-        INNER JOIN [AspNetUsers] u ON t.[Id] = u.[Id]
-    ORDER BY t.[UserName]
-    OFFSET @PageSize * @PageNumber ROWS FETCH NEXT @PageSize ROWS ONLY;
-
-    DROP TABLE #SearchResults;
-END
-
-CREATE OR ALTER PROCEDURE [FindActiveByRoleWithCount]
-    @RoleId nvarchar(450),
-    @SearchTerm nvarchar(256) = NULL,
-    @PageNumber int,
-    @PageSize int
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    -------------------------------------------------------
-    -- 1. SETUP & INPUT CLEANING
-    -------------------------------------------------------
-    DECLARE @SearchTermPrefix nvarchar(258);
-    DECLARE @FirstName nvarchar(258);
-    DECLARE @LastName nvarchar(258);
-    DECLARE @SpacePos int = 0;
-
-    IF @SearchTerm IS NOT NULL
-    BEGIN
-        SET @SearchTermPrefix = UPPER(@SearchTerm) + '%';
-        SET @SpacePos = CHARINDEX(' ', @SearchTerm);
-
-        IF @SpacePos > 0
-        BEGIN
-            SET @FirstName = UPPER(LEFT(@SearchTerm, @SpacePos - 1)) + '%';
-            SET @LastName  = UPPER(SUBSTRING(@SearchTerm, @SpacePos + 1, LEN(@SearchTerm))) + '%';
-        END
-    END
-
-    -- Temp table holds all columns needed for both result sets
-    -- No second join required
-    CREATE TABLE #FilteredUsersInRole
-    (
-        [Id]       nvarchar(450) NOT NULL,
-        [Email]    nvarchar(256) NULL,
-        [FirstName] nvarchar(256) NULL,
-        [LastName]  nvarchar(256) NULL,
-        [UserName] nvarchar(256) NULL
-    );
-
-    -------------------------------------------------------
-    -- 2. THE SEARCH (RUNS EXACTLY ONCE)
-    -------------------------------------------------------
-    IF @SearchTerm IS NULL
-    BEGIN
-        INSERT INTO #FilteredUsersInRole ([Id], [Email], [FirstName], [LastName], [UserName])
-        SELECT u.[Id], u.[Email], u.[FirstName], u.[LastName], u.[UserName]
-        FROM [AspNetUserRoles] ur
-            INNER JOIN [ActiveUsers] u
-                ON u.[Id] = ur.[UserId]
-        WHERE ur.[RoleId] = @RoleId
-        OPTION (RECOMPILE);
-    END
-    ELSE
-    BEGIN
-        INSERT INTO #FilteredUsersInRole ([Id], [Email], [FirstName], [LastName], [UserName])
-        SELECT u.[Id], u.[Email], u.[FirstName], u.[LastName], u.[UserName]
-        FROM [AspNetUserRoles] ur
-            INNER JOIN [ActiveUsers] u
-                ON u.[Id] = ur.[UserId]
-        WHERE ur.[RoleId] = @RoleId
-          AND (   [NormalizedUserName]  LIKE @SearchTermPrefix
-               OR [NormalizedEmail]     LIKE @SearchTermPrefix
-               OR [NormalizedFirstName] LIKE @SearchTermPrefix
-               OR [NormalizedLastName]  LIKE @SearchTermPrefix
-               OR [Id]                  LIKE @SearchTermPrefix
-               OR (@SpacePos > 0
-                   AND [NormalizedFirstName] LIKE @FirstName
-                   AND [NormalizedLastName]  LIKE @LastName))
-        OPTION (RECOMPILE);
-    END
-
-    -------------------------------------------------------
-    -- 3. INDEX FOR PAGING SORT
-    -------------------------------------------------------
-    -- Speeds up the ORDER BY + OFFSET/FETCH on large result sets
-    CREATE NONCLUSTERED INDEX IX_Tmp_UserName
-        ON #FilteredUsersInRole ([UserName])
-        INCLUDE ([Id], [Email], [FirstName], [LastName]);
-
-    -------------------------------------------------------
-    -- 4. RESULT SET 1: THE COUNT
-    -------------------------------------------------------
-    SELECT COUNT(*) FROM #FilteredUsersInRole;
-
-    -------------------------------------------------------
-    -- 5. RESULT SET 2: THE DATA (no second join)
-    -------------------------------------------------------
-    SELECT [Id],
-           [Email],
-           [FirstName],
-           [LastName],
-           [UserName]
-    FROM #FilteredUsersInRole
-    ORDER BY [UserName]
-    OFFSET @PageSize * @PageNumber ROWS FETCH NEXT @PageSize ROWS ONLY;
-
-    -- Cleanup (auto-dropped at end of session, but explicit is clearer)
-    DROP TABLE #FilteredUsersInRole;
-END
-
-CREATE OR ALTER PROCEDURE [FindActiveWithIsInRoleAndCount]
-    @RoleId nvarchar(450),
-    @SearchTerm nvarchar(256) = NULL,
-    @PageNumber int,
-    @PageSize int
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    -------------------------------------------------------
-    -- 1. SETUP & INPUT CLEANING
-    -------------------------------------------------------
-    DECLARE @SearchTermPrefix nvarchar(258);
-    DECLARE @FirstName nvarchar(258);
-    DECLARE @LastName nvarchar(258);
-    DECLARE @SpacePos int = 0;
-
-    IF @SearchTerm IS NOT NULL
-    BEGIN
-        SET @SearchTermPrefix = UPPER(@SearchTerm) + '%';
-        SET @SpacePos = CHARINDEX(' ', @SearchTerm);
-
-        IF @SpacePos > 0
-        BEGIN
-            SET @FirstName = UPPER(LEFT(@SearchTerm, @SpacePos - 1)) + '%';
-            SET @LastName  = UPPER(SUBSTRING(@SearchTerm, @SpacePos + 1, LEN(@SearchTerm))) + '%';
-        END
-    END
-
-    -------------------------------------------------------
-    -- 2. FILTERED USERS (RUNS EXACTLY ONCE)
-    -------------------------------------------------------
-    CREATE TABLE #FilteredUsers
-    (
-        [Id]        nvarchar(450) NOT NULL,
-        [Email]     nvarchar(256) NULL,
-        [FirstName] nvarchar(256) NULL,
-        [LastName]  nvarchar(256) NULL,
-        [UserName]  nvarchar(256) NULL
-    );
-
-    IF @SearchTerm IS NULL
-    BEGIN
-        INSERT INTO #FilteredUsers ([Id], [Email], [FirstName], [LastName], [UserName])
-        SELECT u.[Id], u.[Email], u.[FirstName], u.[LastName], u.[UserName]
-        FROM [AspNetUsers] u
-        WHERE u.[IsBlocked] = 0
-          AND u.[IsDeleted] = 0
-        OPTION (RECOMPILE);
-    END
-    ELSE
-    BEGIN
-        INSERT INTO #FilteredUsers ([Id], [Email], [FirstName], [LastName], [UserName])
-        SELECT u.[Id], u.[Email], u.[FirstName], u.[LastName], u.[UserName]
-        FROM [AspNetUsers] u
-        WHERE u.[IsBlocked] = 0
-          AND u.[IsDeleted] = 0
-          AND (   [NormalizedUserName]  LIKE @SearchTermPrefix
-               OR [NormalizedEmail]     LIKE @SearchTermPrefix
-               OR [NormalizedFirstName] LIKE @SearchTermPrefix
-               OR [NormalizedLastName]  LIKE @SearchTermPrefix
-               OR [Id]                  LIKE @SearchTermPrefix
-               OR (@SpacePos > 0
-                   AND [NormalizedFirstName] LIKE @FirstName
-                   AND [NormalizedLastName]  LIKE @LastName))
-        OPTION (RECOMPILE);
-    END
-
-    -------------------------------------------------------
-    -- 3. INDEX FOR PAGING SORT
-    -------------------------------------------------------
-    CREATE NONCLUSTERED INDEX IX_Tmp_UserName
-        ON #FilteredUsers ([UserName])
-        INCLUDE ([Id], [Email], [FirstName], [LastName]);
-
-    -------------------------------------------------------
-    -- 4. RESULT SET 1: THE COUNT
-    -------------------------------------------------------
-    SELECT COUNT(*) FROM #FilteredUsers;
-
-    -------------------------------------------------------
-    -- 5. RESULT SET 2: THE DATA WITH IsInRole FLAG
-    -------------------------------------------------------
-    -- Direct LEFT JOIN to AspNetUserRoles avoids materializing
-    -- the entire role membership into a separate temp table
-    SELECT f.[Id],
-           f.[Email],
-           f.[FirstName],
-           f.[LastName],
-           f.[UserName],
-           CASE WHEN ur.[RoleId] IS NULL
-                THEN CAST(0 AS bit)
-                ELSE CAST(1 AS bit)
-           END AS [IsInRole]
-    FROM #FilteredUsers f
-        LEFT JOIN [AspNetUserRoles] ur
-            ON ur.[UserId] = f.[Id]
-           AND ur.[RoleId] = @RoleId
-    ORDER BY f.[UserName]
-    OFFSET @PageSize * @PageNumber ROWS FETCH NEXT @PageSize ROWS ONLY;
-
-    -- Cleanup
-    DROP TABLE #FilteredUsers;
-END
-
-INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20260415105540_StoredProcedureRefactorWithoutBigCount', N'10.0.8');
+VALUES (N'20260213115004_StoredProcedureRefactor', N'10.0.11');
 
 COMMIT;
 GO

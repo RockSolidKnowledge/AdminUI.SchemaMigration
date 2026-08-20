@@ -1,4 +1,7 @@
-﻿IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+﻿SET XACT_ABORT ON;
+GO
+
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
 BEGIN
     CREATE TABLE [__EFMigrationsHistory] (
         [MigrationId] nvarchar(150) NOT NULL,
@@ -131,6 +134,7 @@ BEGIN TRANSACTION;
 ALTER TABLE [AspNetUsers] ADD [NormalizedFirstName] nvarchar(256) NULL;
 
 ALTER TABLE [AspNetUsers] ADD [NormalizedLastName] nvarchar(256) NULL;
+GO
 
 CREATE INDEX [FirstNameIndex] ON [AspNetUsers] ([NormalizedFirstName]);
 
@@ -495,6 +499,7 @@ BEGIN
 	OFFSET @PageSize * @PageNumber ROWS FETCH NEXT @PageSize ROWS ONLY
 END
 
+GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
 VALUES (N'20171122162730_UserSearchOptimizationMigration', N'10.0.11');
@@ -812,6 +817,7 @@ BEGIN
 			OFFSET @PageSize * @PageNumber ROWS FETCH NEXT @PageSize ROWS ONLY
 		END
 END
+GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
 VALUES (N'20190723135545_RoleSearchOptimizationMigration', N'10.0.11');
@@ -1537,6 +1543,7 @@ BEGIN
 		END
 END
 
+GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
 VALUES (N'20200706104335_UserSearchOptimizationUpdateMigration', N'10.0.11');
@@ -1805,6 +1812,8 @@ BEGIN
 			END
 	END
 END
+
+GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
 VALUES (N'20200706104406_RoleSearchOptimizationUpdateMigration', N'10.0.11');
@@ -2543,6 +2552,7 @@ BEGIN
 		END
 END
 
+GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
 VALUES (N'20211209115717_AddingIdToStoredProceduresMigration', N'10.0.11');
@@ -2563,7 +2573,7 @@ BEGIN TRANSACTION;
 
 GO
 
-CREATE PROCEDURE [FindAllUsersWithCountWithClaimValueSearch] 
+CREATE OR ALTER PROCEDURE [FindAllUsersWithCountWithClaimValueSearch] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
 	@PageSize int
@@ -2683,7 +2693,7 @@ END
 
 GO
 
-CREATE PROCEDURE [FindActiveUsersWithCountWithClaimValueSearch]
+CREATE OR ALTER PROCEDURE [FindActiveUsersWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
 	@PageSize int
@@ -2803,7 +2813,7 @@ END
 
 GO
 
-CREATE PROCEDURE [FindActiveOrBlockedWithCountWithClaimValueSearch]
+CREATE OR ALTER PROCEDURE [FindActiveOrBlockedWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
 	@PageSize int
@@ -2920,7 +2930,7 @@ END
 
 GO
 
-CREATE PROCEDURE [FindActiveOrDeletedUsersWithCountWithClaimValueSearch]
+CREATE OR ALTER PROCEDURE [FindActiveOrDeletedUsersWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
 	@PageSize int
@@ -3039,7 +3049,7 @@ END
 
 GO
 
-CREATE PROCEDURE [FindBlockedOrDeletedWithCountWithClaimValueSearch]
+CREATE OR ALTER PROCEDURE [FindBlockedOrDeletedWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
 	@PageSize int
@@ -3157,7 +3167,7 @@ END
 
 GO
 
-CREATE PROCEDURE [FindBlockedUsersWithCountWithClaimValueSearch]
+CREATE OR ALTER PROCEDURE [FindBlockedUsersWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
 	@PageSize int
@@ -3276,7 +3286,7 @@ END
 
 GO
 
-CREATE PROCEDURE [FindDeletedUsersWithCountWithClaimValueSearch] 
+CREATE OR ALTER PROCEDURE [FindDeletedUsersWithCountWithClaimValueSearch] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
 	@PageSize int
@@ -3393,6 +3403,7 @@ BEGIN
 		END
 END
 
+GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
 VALUES (N'20220225154308_ClaimValueSearchMigration', N'10.0.11');
@@ -4732,6 +4743,7 @@ BEGIN
 	END
 END
 
+GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
 VALUES (N'20230901102018_ClaimValueSearchBugFixes', N'10.0.11');
@@ -5366,6 +5378,7 @@ BEGIN
 	END
 END
 
+GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
 VALUES (N'20250126152936_ClaimValueSearchRepeatedResultsBugFix', N'10.0.11');
@@ -5401,7 +5414,7 @@ DROP PROCEDURE [FindActiveUsersInRoleAndAllActiveUsersWithCount];
 
 
 GO
-CREATE PROCEDURE [FindUsersWithCount]
+CREATE OR ALTER PROCEDURE [FindUsersWithCount]
     @SearchTerm nvarchar(256),
     @PageNumber int,
     @PageSize int,
@@ -5550,7 +5563,7 @@ BEGIN
 END
 
 GO
-CREATE PROCEDURE [FindActiveByRoleWithCount]
+CREATE OR ALTER PROCEDURE [FindActiveByRoleWithCount]
     @RoleId nvarchar(450),
     @SearchTerm nvarchar(256) = NULL,
     @PageNumber int,
@@ -5652,7 +5665,7 @@ BEGIN
 END
 
 GO
-CREATE PROCEDURE [FindActiveWithIsInRoleAndCount]
+CREATE OR ALTER PROCEDURE [FindActiveWithIsInRoleAndCount]
     @RoleId nvarchar(450),
     @SearchTerm nvarchar(256) = NULL,
     @PageNumber int,
@@ -5756,10 +5769,10 @@ BEGIN
     -- Cleanup
     DROP TABLE #FilteredUsers;
 END
+GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
 VALUES (N'20260213115004_StoredProcedureRefactor', N'10.0.11');
 
 COMMIT;
 GO
-

@@ -32,7 +32,7 @@ CREATE TABLE [AuditEntries] (
 CREATE INDEX [IX_AuditEntries_When] ON [AuditEntries] ([When]);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20181220155759_InitalSqlServerAuditDbMigration', N'10.0.8');
+VALUES (N'20181220155759_InitalSqlServerAuditDbMigration', N'10.0.11');
 
 COMMIT;
 GO

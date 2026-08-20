@@ -33,7 +33,7 @@ CREATE UNIQUE INDEX [IX_RelyingParties_Realm] ON [RelyingParties] ([Realm]);
 CREATE INDEX [IX_RelyingPartyClaimMappings_RelyingPartyId] ON [RelyingPartyClaimMappings] ([RelyingPartyId]);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20190305133618_SqlServerWsfederationInitial', N'10.0.8');
+VALUES (N'20190305133618_SqlServerWsfederationInitial', N'10.0.11');
 
 COMMIT;
 GO

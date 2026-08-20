@@ -18,7 +18,7 @@ CREATE TABLE "SamlArtifacts" (
 CREATE INDEX "IX_SamlArtifacts_Expiration" ON "SamlArtifacts" ("Expiration");
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20220114164545_PostgreSqlSamlArtifactInitialMigration', '10.0.8');
+VALUES ('20220114164545_PostgreSqlSamlArtifactInitialMigration', '10.0.11');
 
 COMMIT;
 

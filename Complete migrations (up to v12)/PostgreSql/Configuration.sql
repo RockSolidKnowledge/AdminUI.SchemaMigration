@@ -227,13 +227,13 @@ CREATE INDEX "IX_IdentityClaims_IdentityResourceId" ON "IdentityClaims" ("Identi
 CREATE UNIQUE INDEX "IX_IdentityResources_Name" ON "IdentityResources" ("Name");
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20171026082702_InitialPostgreSqlConfigurationDbMigration', '10.0.8');
+VALUES ('20171026082702_InitialPostgreSqlConfigurationDbMigration', '10.0.11');
 
 COMMIT;
 
 START TRANSACTION;
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20171122163837_UserSearchOptimizationConfigurationDbMigration', '10.0.8');
+VALUES ('20171122163837_UserSearchOptimizationConfigurationDbMigration', '10.0.11');
 
 COMMIT;
 
@@ -302,13 +302,13 @@ CREATE INDEX "IX_ApiProperties_ApiResourceId" ON "ApiProperties" ("ApiResourceId
 CREATE INDEX "IX_IdentityProperties_IdentityResourceId" ON "IdentityProperties" ("IdentityResourceId");
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20181112154834_IdentityServer2.3PostgreSqlConfigurationDbMigration', '10.0.8');
+VALUES ('20181112154834_IdentityServer2.3PostgreSqlConfigurationDbMigration', '10.0.11');
 
 COMMIT;
 
 START TRANSACTION;
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20200702113308_UpdateIdColumnsPostgreSqlConfigurationDbMigration', '10.0.8');
+VALUES ('20200702113308_UpdateIdColumnsPostgreSqlConfigurationDbMigration', '10.0.11');
 
 COMMIT;
 
@@ -560,7 +560,7 @@ DROP TABLE "IdentityClaims";
 DROP TABLE "IdentityProperties";
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20200702113402_V3toV4PostgreSqlConfigurationDbMigration', '10.0.8');
+VALUES ('20200702113402_V3toV4PostgreSqlConfigurationDbMigration', '10.0.11');
 
 COMMIT;
 
@@ -568,7 +568,7 @@ START TRANSACTION;
 ALTER TABLE "ApiResources" ADD "RequireResourceIndicator" boolean NOT NULL DEFAULT FALSE;
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20210106163812_DuendePostgreSqlConfigurationMigration', '10.0.8');
+VALUES ('20210106163812_DuendePostgreSqlConfigurationMigration', '10.0.11');
 
 COMMIT;
 
@@ -584,7 +584,7 @@ CREATE TABLE "IdentityProviders" (
 );
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20210602105114_IdentityProvidersPostgreSqlConfigurationMigration', '10.0.8');
+VALUES ('20210602105114_IdentityProvidersPostgreSqlConfigurationMigration', '10.0.11');
 
 COMMIT;
 
@@ -700,7 +700,7 @@ CREATE UNIQUE INDEX "IX_ApiResourceProperties_ApiResourceId_Key" ON "ApiResource
 CREATE UNIQUE INDEX "IX_ApiResourceClaims_ApiResourceId_Type" ON "ApiResourceClaims" ("ApiResourceId", "Type");
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20220104130806_DuendeV6PostgreSqlConfigurationMigration', '10.0.8');
+VALUES ('20220104130806_DuendeV6PostgreSqlConfigurationMigration', '10.0.11');
 
 COMMIT;
 
@@ -708,7 +708,7 @@ START TRANSACTION;
 ALTER TABLE "Clients" ADD "CoordinateLifetimeWithUserSession" boolean;
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20220608093254_Duende61ConfigurationUpdate', '10.0.8');
+VALUES ('20220608093254_Duende61ConfigurationUpdate', '10.0.11');
 
 COMMIT;
 
@@ -722,7 +722,7 @@ ALTER TABLE "Clients" ADD "InitiateLoginUri" character varying(2000);
 ALTER TABLE "Clients" ADD "RequireDPoP" boolean NOT NULL DEFAULT FALSE;
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20230620154509_Duende63ConfigurationUpdate', '10.0.8');
+VALUES ('20230620154509_Duende63ConfigurationUpdate', '10.0.11');
 
 COMMIT;
 
@@ -732,7 +732,7 @@ ALTER TABLE "Clients" ADD "PushedAuthorizationLifetime" integer;
 ALTER TABLE "Clients" ADD "RequirePushedAuthorization" boolean NOT NULL DEFAULT FALSE;
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20240105112808_DuendeV7PostgreSqlConfigurationMigration', '10.0.8');
+VALUES ('20240105112808_DuendeV7PostgreSqlConfigurationMigration', '10.0.11');
 
 COMMIT;
 

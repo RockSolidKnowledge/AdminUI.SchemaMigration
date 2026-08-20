@@ -69,7 +69,7 @@ CREATE INDEX [IX_ServiceProviderSignCertificates_ServiceProviderId] ON [ServiceP
 CREATE INDEX [IX_ServiceProviderSingleLogoutServices_ServiceProviderId] ON [ServiceProviderSingleLogoutServices] ([ServiceProviderId]);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20190305134515_SqlServerSaml2PInitial', N'10.0.8');
+VALUES (N'20190305134515_SqlServerSaml2PInitial', N'10.0.11');
 
 COMMIT;
 GO
@@ -78,7 +78,7 @@ BEGIN TRANSACTION;
 ALTER TABLE [ServiceProviders] ADD [AllowIdpInitiatedSso] bit NOT NULL DEFAULT CAST(0 AS bit);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20200225104531_Added AllowIdpInitiatedSso', N'10.0.8');
+VALUES (N'20200225104531_Added AllowIdpInitiatedSso', N'10.0.11');
 
 COMMIT;
 GO
@@ -89,7 +89,7 @@ ALTER TABLE [ServiceProviders] ADD [RequireAuthenticationRequestsSigned] bit NUL
 EXEC sp_rename N'[ServiceProviders].[RequireSamlRequestDestination]', N'RequireSamlMessageDestination', 'COLUMN';
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20200914075545_RskSamlV3', N'10.0.8');
+VALUES (N'20200914075545_RskSamlV3', N'10.0.11');
 
 COMMIT;
 GO
@@ -117,7 +117,7 @@ CREATE TABLE [ServiceProviderArtifactResolutionServices] (
 CREATE INDEX [IX_ServiceProviderArtifactResolutionServices_ServiceProviderId] ON [ServiceProviderArtifactResolutionServices] ([ServiceProviderId]);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20220112143907_RskSamlPackageUpdate', N'10.0.8');
+VALUES (N'20220112143907_RskSamlPackageUpdate', N'10.0.11');
 
 COMMIT;
 GO

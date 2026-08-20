@@ -28,7 +28,7 @@ CREATE TABLE "AuditEntries" (
 CREATE INDEX "IX_AuditEntries_When" ON "AuditEntries" ("When");
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20181220155915_InitalPostgreSqlAuditDbMigration', '10.0.8');
+VALUES ('20181220155915_InitalPostgreSqlAuditDbMigration', '10.0.11');
 
 COMMIT;
 

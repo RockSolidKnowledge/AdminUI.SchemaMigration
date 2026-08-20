@@ -1,4 +1,6 @@
-﻿CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+﻿-- This set of migrations are dependent on Configuration tables from IdentityServer already existing run ./Configuration.sql script first
+
+CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
     "MigrationId" character varying(150) NOT NULL,
     "ProductVersion" character varying(32) NOT NULL,
     CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY ("MigrationId")
@@ -46,13 +48,13 @@ CREATE UNIQUE INDEX "IdentityNameIndex" ON "ExtendedIdentityResources" ("Identit
 CREATE UNIQUE INDEX "IdentityResourceNameIndex" ON "ExtendedIdentityResources" ("NormalizedName");
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20171026082855_InitialPostgreSqlExtendedConfigurationDbMigration', '10.0.8');
+VALUES ('20171026082855_InitialPostgreSqlExtendedConfigurationDbMigration', '10.0.11');
 
 COMMIT;
 
 START TRANSACTION;
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20171122163921_UserSearchOptimizationExtendedConfigurationDbMigration', '10.0.8');
+VALUES ('20171122163921_UserSearchOptimizationExtendedConfigurationDbMigration', '10.0.11');
 
 COMMIT;
 
@@ -64,7 +66,7 @@ CREATE TABLE "ConfigurationEntries" (
 );
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20180724143733_ConfigurationEntries', '10.0.8');
+VALUES ('20180724143733_ConfigurationEntries', '10.0.11');
 
 COMMIT;
 
@@ -85,7 +87,7 @@ UPDATE "IdentityResources"
 	                                WHERE "IdentityResources"."Name" = "ExtendedIdentityResources"."IdentityResourceName";
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20181205165028_ExtendedDataMigration2.3', '10.0.8');
+VALUES ('20181205165028_ExtendedDataMigration2.3', '10.0.11');
 
 COMMIT;
 
@@ -93,7 +95,7 @@ START TRANSACTION;
 ALTER TABLE "ExtendedClients" ADD "ClientType" integer;
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20190401105052_ClientType', '10.0.8');
+VALUES ('20190401105052_ClientType', '10.0.11');
 
 COMMIT;
 

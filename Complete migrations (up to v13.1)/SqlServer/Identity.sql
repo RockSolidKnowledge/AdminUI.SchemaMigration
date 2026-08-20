@@ -1,4 +1,7 @@
-﻿IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+﻿SET XACT_ABORT ON;
+GO
+
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
 BEGIN
     CREATE TABLE [__EFMigrationsHistory] (
         [MigrationId] nvarchar(150) NOT NULL,
@@ -122,7 +125,7 @@ CREATE INDEX [EmailIndex] ON [AspNetUsers] ([NormalizedEmail]);
 CREATE UNIQUE CLUSTERED INDEX [UserNameIndex] ON [AspNetUsers] ([NormalizedUserName]);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20171026080706_InitialSqlServerIdentityDbMigration', N'10.0.8');
+VALUES (N'20171026080706_InitialSqlServerIdentityDbMigration', N'10.0.11');
 
 COMMIT;
 GO
@@ -131,6 +134,7 @@ BEGIN TRANSACTION;
 ALTER TABLE [AspNetUsers] ADD [NormalizedFirstName] nvarchar(256) NULL;
 
 ALTER TABLE [AspNetUsers] ADD [NormalizedLastName] nvarchar(256) NULL;
+GO
 
 CREATE INDEX [FirstNameIndex] ON [AspNetUsers] ([NormalizedFirstName]);
 
@@ -140,6 +144,7 @@ CREATE INDEX [CountIndex] ON [AspNetUsers] ([IsBlocked], [IsDeleted]);
 
 CREATE INDEX [CountIndexReversed] ON [AspNetUsers] ([IsDeleted], [IsBlocked]);
 
+GO
 CREATE PROCEDURE [FindAllUsersWithCount] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -188,6 +193,7 @@ BEGIN
 END
 
 
+GO
 CREATE PROCEDURE [FindActiveUsersWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -238,6 +244,7 @@ BEGIN
 END
 
 
+GO
 CREATE PROCEDURE [FindActiveOrBlockedWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -288,6 +295,7 @@ BEGIN
 END
 
 
+GO
 CREATE PROCEDURE [FindActiveOrDeletedUsersWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -338,6 +346,7 @@ BEGIN
 END
 
 
+GO
 CREATE PROCEDURE [FindBlockedOrDeletedWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -388,6 +397,7 @@ BEGIN
 END
 
 
+GO
 CREATE PROCEDURE [FindBlockedUsersWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -438,6 +448,7 @@ BEGIN
 END
 
 
+GO
 CREATE PROCEDURE [FindDeletedUsersWithCount] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -487,9 +498,10 @@ BEGIN
 	OFFSET @PageSize * @PageNumber ROWS FETCH NEXT @PageSize ROWS ONLY
 END
 
+GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20171122162730_UserSearchOptimizationMigration', N'10.0.8');
+VALUES (N'20171122162730_UserSearchOptimizationMigration', N'10.0.11');
 
 COMMIT;
 GO
@@ -506,6 +518,7 @@ SELECT        Id, Email, FirstName, LastName, UserName, NormalizedFirstName, Nor
 FROM          ' + @SchemaName + '.AspNetUsers
 WHERE        (IsBlocked = 0) AND (IsDeleted = 0)';
 EXEC sp_executesql @CreateViewSql;
+GO
 
 
 DECLARE @SchemaName NVARCHAR(256);
@@ -519,6 +532,7 @@ SET @CreateIndexSql = 'CREATE UNIQUE CLUSTERED INDEX [ClusteredIndex-20190723-13
    [NormalizedEmail] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]';
 EXEC sp_executesql @CreateIndexSql;
+GO
 
 
 DECLARE @SchemaName NVARCHAR(256);
@@ -632,6 +646,7 @@ Begin DesignProperties =
    End
 End
 ' , @level0type=N'SCHEMA',@level0name=@SchemaName, @level1type=N'VIEW',@level1name=N'ActiveUsers'
+GO
 
 
 DECLARE @SchemaName NVARCHAR(256);
@@ -640,6 +655,7 @@ SET @SchemaName = SCHEMA_NAME();
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=@SchemaName, @level1type=N'VIEW',@level1name=N'ActiveUsers'
 
 
+GO
 CREATE PROCEDURE [FindActiveByRoleWithCount]
 	@RoleId nvarchar(450),
 	@SearchTerm nvarchar(256) = null, 
@@ -710,6 +726,7 @@ BEGIN
 		END
 END
 
+GO
 CREATE PROCEDURE FindActiveUsersInRoleAndAllActiveUsersWithCount
 	@RoleId nvarchar(450),
 	@SearchTerm nvarchar(256) = null, 
@@ -799,13 +816,16 @@ BEGIN
 		END
 END
 
+GO
+
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20190723135545_RoleSearchOptimizationMigration', N'10.0.8');
+VALUES (N'20190723135545_RoleSearchOptimizationMigration', N'10.0.11');
 
 COMMIT;
 GO
 
 BEGIN TRANSACTION;
+GO
 CREATE OR ALTER PROCEDURE [FindAllUsersWithCount] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -903,6 +923,7 @@ BEGIN
 END
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveUsersWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -1007,6 +1028,7 @@ END
 
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveOrBlockedWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -1109,6 +1131,7 @@ END
 
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveOrDeletedUsersWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -1211,6 +1234,7 @@ BEGIN
 END
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindBlockedOrDeletedWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -1312,6 +1336,7 @@ BEGIN
 		END
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindBlockedUsersWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -1413,6 +1438,7 @@ BEGIN
 		END
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindDeletedUsersWithCount] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -1514,14 +1540,16 @@ BEGIN
 		END
 END
 
+GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20200706104335_UserSearchOptimizationUpdateMigration', N'10.0.8');
+VALUES (N'20200706104335_UserSearchOptimizationUpdateMigration', N'10.0.11');
 
 COMMIT;
 GO
 
 BEGIN TRANSACTION;
+GO
 CREATE OR ALTER PROCEDURE [FindActiveByRoleWithCount]
 	@RoleId nvarchar(450),
 	@SearchTerm nvarchar(256) = null, 
@@ -1638,6 +1666,7 @@ BEGIN
 		END
 END
 
+GO
 CREATE OR ALTER PROCEDURE FindActiveUsersInRoleAndAllActiveUsersWithCount
 	@RoleId nvarchar(450),
 	@SearchTerm nvarchar(256) = null, 
@@ -1778,8 +1807,10 @@ BEGIN
 	END
 END
 
+GO
+
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20200706104406_RoleSearchOptimizationUpdateMigration', N'10.0.8');
+VALUES (N'20200706104406_RoleSearchOptimizationUpdateMigration', N'10.0.11');
 
 COMMIT;
 GO
@@ -1793,12 +1824,13 @@ CREATE TABLE [EnumClaimTypeAllowedValues] (
 );
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20210430141851_EnumeratedClaimTypeMigration', N'10.0.8');
+VALUES (N'20210430141851_EnumeratedClaimTypeMigration', N'10.0.11');
 
 COMMIT;
 GO
 
 BEGIN TRANSACTION;
+GO
 CREATE OR ALTER PROCEDURE [FindAllUsersWithCount] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -1896,6 +1928,7 @@ BEGIN
 END
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveUsersWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -2000,6 +2033,7 @@ END
 
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveOrBlockedWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -2102,6 +2136,7 @@ END
 
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveOrDeletedUsersWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -2204,6 +2239,7 @@ BEGIN
 END
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindBlockedOrDeletedWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -2305,6 +2341,7 @@ BEGIN
 		END
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindBlockedUsersWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -2406,6 +2443,7 @@ BEGIN
 		END
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindDeletedUsersWithCount] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -2507,9 +2545,10 @@ BEGIN
 		END
 END
 
+GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20211209115717_AddingIdToStoredProceduresMigration', N'10.0.8');
+VALUES (N'20211209115717_AddingIdToStoredProceduresMigration', N'10.0.11');
 
 COMMIT;
 GO
@@ -2518,13 +2557,14 @@ BEGIN TRANSACTION;
 ALTER TABLE [AspNetClaimTypes] ADD [DisplayName] nvarchar(max) NULL;
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20220110161021_ClaimTypeDisplayNameMigration', N'10.0.8');
+VALUES (N'20220110161021_ClaimTypeDisplayNameMigration', N'10.0.11');
 
 COMMIT;
 GO
 
 BEGIN TRANSACTION;
-CREATE PROCEDURE [FindAllUsersWithCountWithClaimValueSearch] 
+GO
+CREATE OR ALTER PROCEDURE [FindAllUsersWithCountWithClaimValueSearch] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
 	@PageSize int
@@ -2643,7 +2683,8 @@ BEGIN
 END
 
 
-CREATE PROCEDURE [FindActiveUsersWithCountWithClaimValueSearch]
+GO
+CREATE OR ALTER PROCEDURE [FindActiveUsersWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
 	@PageSize int
@@ -2763,7 +2804,8 @@ END
 
 
 
-CREATE PROCEDURE [FindActiveOrBlockedWithCountWithClaimValueSearch]
+GO
+CREATE OR ALTER PROCEDURE [FindActiveOrBlockedWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
 	@PageSize int
@@ -2880,7 +2922,8 @@ END
 
 
 
-CREATE PROCEDURE [FindActiveOrDeletedUsersWithCountWithClaimValueSearch]
+GO
+CREATE OR ALTER PROCEDURE [FindActiveOrDeletedUsersWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
 	@PageSize int
@@ -2998,7 +3041,8 @@ BEGIN
 END
 
 
-CREATE PROCEDURE [FindBlockedOrDeletedWithCountWithClaimValueSearch]
+GO
+CREATE OR ALTER PROCEDURE [FindBlockedOrDeletedWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
 	@PageSize int
@@ -3114,7 +3158,8 @@ BEGIN
 		END
 END
 
-CREATE PROCEDURE [FindBlockedUsersWithCountWithClaimValueSearch]
+GO
+CREATE OR ALTER PROCEDURE [FindBlockedUsersWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
 	@PageSize int
@@ -3231,7 +3276,8 @@ BEGIN
 		END
 END
 
-CREATE PROCEDURE [FindDeletedUsersWithCountWithClaimValueSearch] 
+GO
+CREATE OR ALTER PROCEDURE [FindDeletedUsersWithCountWithClaimValueSearch] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
 	@PageSize int
@@ -3348,14 +3394,16 @@ BEGIN
 		END
 END
 
+GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20220225154308_ClaimValueSearchMigration', N'10.0.8');
+VALUES (N'20220225154308_ClaimValueSearchMigration', N'10.0.11');
 
 COMMIT;
 GO
 
 BEGIN TRANSACTION;
+GO
 CREATE OR ALTER PROCEDURE [FindActiveOrBlockedWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -3426,6 +3474,7 @@ BEGIN
     END
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveOrBlockedWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -3515,6 +3564,7 @@ END
 
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveOrDeletedUsersWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -3586,6 +3636,7 @@ BEGIN
 END
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveOrDeletedUsersWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -3676,6 +3727,7 @@ BEGIN
 END
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveByRoleWithCount]
 	@RoleId nvarchar(450),
 	@SearchTerm nvarchar(256) = null, 
@@ -3766,6 +3818,7 @@ BEGIN
 		END
 END
 
+GO
 CREATE OR ALTER PROCEDURE FindActiveUsersInRoleAndAllActiveUsersWithCount
 	@RoleId nvarchar(450),
 	@SearchTerm nvarchar(256) = null, 
@@ -3873,6 +3926,7 @@ BEGIN
 	    END
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveUsersWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -3946,6 +4000,7 @@ END
 
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveUsersWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -4036,6 +4091,7 @@ END
 
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindAllUsersWithCount] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -4106,6 +4162,7 @@ BEGIN
 END
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindAllUsersWithCountWithClaimValueSearch] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -4194,6 +4251,7 @@ BEGIN
 END
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindBlockedOrDeletedWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -4264,6 +4322,7 @@ BEGIN
 	END
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindBlockedOrDeletedWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -4351,6 +4410,7 @@ BEGIN
 	END
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindBlockedUsersWithCount]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -4421,6 +4481,7 @@ BEGIN
 	END
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindBlockedUsersWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -4508,6 +4569,7 @@ BEGIN
 	END
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindDeletedUsersWithCount] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -4579,6 +4641,7 @@ BEGIN
 END
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindDeletedUsersWithCountWithClaimValueSearch] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -4666,14 +4729,16 @@ BEGIN
 	END
 END
 
+GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20230901102018_ClaimValueSearchBugFixes', N'10.0.8');
+VALUES (N'20230901102018_ClaimValueSearchBugFixes', N'10.0.11');
 
 COMMIT;
 GO
 
 BEGIN TRANSACTION;
+GO
 CREATE OR ALTER PROCEDURE [FindActiveOrBlockedWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -4763,6 +4828,7 @@ END
 
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveOrDeletedUsersWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -4853,6 +4919,7 @@ BEGIN
 END
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveUsersWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -4943,6 +5010,7 @@ END
 
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindAllUsersWithCountWithClaimValueSearch] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -5031,6 +5099,7 @@ BEGIN
 END
 
 
+GO
 CREATE OR ALTER PROCEDURE [FindBlockedOrDeletedWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -5118,6 +5187,7 @@ BEGIN
 	END
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindBlockedUsersWithCountWithClaimValueSearch]
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -5205,6 +5275,7 @@ BEGIN
 	END
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindDeletedUsersWithCountWithClaimValueSearch] 
 	@SearchTerm nvarchar(256),
 	@PageNumber int,
@@ -5292,9 +5363,10 @@ BEGIN
 	END
 END
 
+GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20250126152936_ClaimValueSearchRepeatedResultsBugFix', N'10.0.8');
+VALUES (N'20250126152936_ClaimValueSearchRepeatedResultsBugFix', N'10.0.11');
 
 COMMIT;
 GO
@@ -5326,7 +5398,8 @@ DROP PROCEDURE [FindActiveByRoleWithCount];
 DROP PROCEDURE [FindActiveUsersInRoleAndAllActiveUsersWithCount];
 
 
-CREATE PROCEDURE [FindUsersWithCount]
+GO
+CREATE OR ALTER PROCEDURE [FindUsersWithCount]
     @SearchTerm nvarchar(256),
     @PageNumber int,
     @PageSize int,
@@ -5474,7 +5547,8 @@ BEGIN
     DROP TABLE #SearchResults;
 END
 
-CREATE PROCEDURE [FindActiveByRoleWithCount]
+GO
+CREATE OR ALTER PROCEDURE [FindActiveByRoleWithCount]
     @RoleId nvarchar(450),
     @SearchTerm nvarchar(256) = NULL,
     @PageNumber int,
@@ -5575,7 +5649,8 @@ BEGIN
     DROP TABLE #FilteredUsersInRole;
 END
 
-CREATE PROCEDURE [FindActiveWithIsInRoleAndCount]
+GO
+CREATE OR ALTER PROCEDURE [FindActiveWithIsInRoleAndCount]
     @RoleId nvarchar(450),
     @SearchTerm nvarchar(256) = NULL,
     @PageNumber int,
@@ -5680,13 +5755,16 @@ BEGIN
     DROP TABLE #FilteredUsers;
 END
 
+GO
+
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20260213115004_StoredProcedureRefactor', N'10.0.8');
+VALUES (N'20260213115004_StoredProcedureRefactor', N'10.0.11');
 
 COMMIT;
 GO
 
 BEGIN TRANSACTION;
+GO
 CREATE OR ALTER PROCEDURE [FindUsersWithCount]
     @SearchTerm nvarchar(256),
     @PageNumber int,
@@ -5835,6 +5913,7 @@ BEGIN
     DROP TABLE #SearchResults;
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveByRoleWithCount]
     @RoleId nvarchar(450),
     @SearchTerm nvarchar(256) = NULL,
@@ -5936,6 +6015,7 @@ BEGIN
     DROP TABLE #FilteredUsersInRole;
 END
 
+GO
 CREATE OR ALTER PROCEDURE [FindActiveWithIsInRoleAndCount]
     @RoleId nvarchar(450),
     @SearchTerm nvarchar(256) = NULL,
@@ -6040,10 +6120,75 @@ BEGIN
     -- Cleanup
     DROP TABLE #FilteredUsers;
 END
+GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20260415105540_StoredProcedureRefactorWithoutBigCount', N'10.0.8');
+VALUES (N'20260415105540_StoredProcedureRefactorWithoutBigCount', N'10.0.11');
 
 COMMIT;
 GO
 
+BEGIN TRANSACTION;
+ALTER TABLE [AspNetUserTokens] DROP CONSTRAINT [PK_AspNetUserTokens];
+
+DECLARE @var nvarchar(max);
+SELECT @var = QUOTENAME([d].[name])
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[AspNetUserTokens]') AND [c].[name] = N'Name');
+IF @var IS NOT NULL EXEC(N'ALTER TABLE [AspNetUserTokens] DROP CONSTRAINT ' + @var + ';');
+ALTER TABLE [AspNetUserTokens] ALTER COLUMN [Name] nvarchar(128) NOT NULL;
+
+DECLARE @var1 nvarchar(max);
+SELECT @var1 = QUOTENAME([d].[name])
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[AspNetUserTokens]') AND [c].[name] = N'LoginProvider');
+IF @var1 IS NOT NULL EXEC(N'ALTER TABLE [AspNetUserTokens] DROP CONSTRAINT ' + @var1 + ';');
+ALTER TABLE [AspNetUserTokens] ALTER COLUMN [LoginProvider] nvarchar(128) NOT NULL;
+
+ALTER TABLE [AspNetUserTokens] ADD CONSTRAINT [PK_AspNetUserTokens] PRIMARY KEY ([UserId], [LoginProvider], [Name]);
+
+DECLARE @var2 nvarchar(max);
+SELECT @var2 = QUOTENAME([d].[name])
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[AspNetUsers]') AND [c].[name] = N'PhoneNumber');
+IF @var2 IS NOT NULL EXEC(N'ALTER TABLE [AspNetUsers] DROP CONSTRAINT ' + @var2 + ';');
+ALTER TABLE [AspNetUsers] ALTER COLUMN [PhoneNumber] nvarchar(256) NULL;
+
+ALTER TABLE [AspNetUserLogins] DROP CONSTRAINT [PK_AspNetUserLogins];
+
+DECLARE @var3 nvarchar(max);
+SELECT @var3 = QUOTENAME([d].[name])
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[AspNetUserLogins]') AND [c].[name] = N'ProviderKey');
+IF @var3 IS NOT NULL EXEC(N'ALTER TABLE [AspNetUserLogins] DROP CONSTRAINT ' + @var3 + ';');
+ALTER TABLE [AspNetUserLogins] ALTER COLUMN [ProviderKey] nvarchar(128) NOT NULL;
+
+DECLARE @var4 nvarchar(max);
+SELECT @var4 = QUOTENAME([d].[name])
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[AspNetUserLogins]') AND [c].[name] = N'LoginProvider');
+IF @var4 IS NOT NULL EXEC(N'ALTER TABLE [AspNetUserLogins] DROP CONSTRAINT ' + @var4 + ';');
+ALTER TABLE [AspNetUserLogins] ALTER COLUMN [LoginProvider] nvarchar(128) NOT NULL;
+
+ALTER TABLE [AspNetUserLogins] ADD CONSTRAINT [PK_AspNetUserLogins] PRIMARY KEY ([LoginProvider], [ProviderKey]);
+
+CREATE TABLE [AspNetUserPasskeys] (
+    [CredentialId] varbinary(1024) NOT NULL,
+    [UserId] nvarchar(450) NOT NULL,
+    [Data] nvarchar(max) NOT NULL,
+    CONSTRAINT [PK_AspNetUserPasskeys] PRIMARY KEY ([CredentialId]),
+    CONSTRAINT [FK_AspNetUserPasskeys_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+
+CREATE INDEX [IX_AspNetUserPasskeys_UserId] ON [AspNetUserPasskeys] ([UserId]);
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20260618105204_Passkeys', N'10.0.11');
+
+COMMIT;
+GO

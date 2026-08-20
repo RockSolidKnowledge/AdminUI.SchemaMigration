@@ -1,4 +1,6 @@
-﻿IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+﻿-- This set of migrations are dependent on Configuration tables from IdentityServer already existing run ./Configuration.sql script first
+
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
 BEGIN
     CREATE TABLE [__EFMigrationsHistory] (
         [MigrationId] nvarchar(150) NOT NULL,
@@ -50,14 +52,14 @@ CREATE UNIQUE INDEX [IdentityNameIndex] ON [ExtendedIdentityResources] ([Identit
 CREATE UNIQUE INDEX [IdentityResourceNameIndex] ON [ExtendedIdentityResources] ([NormalizedName]);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20171026080835_InitialSqlServerExtendedConfigurationDbMigration', N'10.0.8');
+VALUES (N'20171026080835_InitialSqlServerExtendedConfigurationDbMigration', N'10.0.11');
 
 COMMIT;
 GO
 
 BEGIN TRANSACTION;
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20171122163718_UserSearchOptimizationExtendedConfigurationDbMigration', N'10.0.8');
+VALUES (N'20171122163718_UserSearchOptimizationExtendedConfigurationDbMigration', N'10.0.11');
 
 COMMIT;
 GO
@@ -70,7 +72,7 @@ CREATE TABLE [ConfigurationEntries] (
 );
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20180626100745_ConfigurationEntries', N'10.0.8');
+VALUES (N'20180626100745_ConfigurationEntries', N'10.0.11');
 
 COMMIT;
 GO
@@ -92,7 +94,7 @@ UPDATE IdentityResources
 	                               WHERE IdentityResources.Name = e.IdentityResourceName
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20181205163055_ExtendedDataMigration2.3', N'10.0.8');
+VALUES (N'20181205163055_ExtendedDataMigration2.3', N'10.0.11');
 
 COMMIT;
 GO
@@ -101,7 +103,7 @@ BEGIN TRANSACTION;
 ALTER TABLE [ExtendedClients] ADD [ClientType] int NULL;
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20190401104724_ClientType', N'10.0.8');
+VALUES (N'20190401104724_ClientType', N'10.0.11');
 
 COMMIT;
 GO

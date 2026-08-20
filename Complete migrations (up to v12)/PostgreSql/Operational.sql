@@ -19,13 +19,13 @@ CREATE TABLE "PersistedGrants" (
 CREATE INDEX "IX_PersistedGrants_SubjectId_ClientId_Type" ON "PersistedGrants" ("SubjectId", "ClientId", "Type");
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20171026082436_InitialPostgreSqlOperationalDbMigration', '10.0.8');
+VALUES ('20171026082436_InitialPostgreSqlOperationalDbMigration', '10.0.11');
 
 COMMIT;
 
 START TRANSACTION;
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20171122163955_UserSearchOptimizationOperationalDbMigration', '10.0.8');
+VALUES ('20171122163955_UserSearchOptimizationOperationalDbMigration', '10.0.11');
 
 COMMIT;
 
@@ -46,7 +46,7 @@ CREATE UNIQUE INDEX "IX_DeviceCodes_DeviceCode" ON "DeviceCodes" ("DeviceCode");
 CREATE UNIQUE INDEX "IX_DeviceCodes_UserCode" ON "DeviceCodes" ("UserCode");
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20181112154906_IdentityServer2.3PostgreSqlOperationalDbMigration', '10.0.8');
+VALUES ('20181112154906_IdentityServer2.3PostgreSqlOperationalDbMigration', '10.0.11');
 
 COMMIT;
 
@@ -77,7 +77,7 @@ ALTER TABLE "PersistedGrants"
 CREATE INDEX "IX_PersistedGrants_SubjectId_SessionId_Type" ON "PersistedGrants" ("SubjectId", "SessionId", "Type");
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20200702113344_V3toV4PostgreSqlOperationalDbMigration', '10.0.8');
+VALUES ('20200702113344_V3toV4PostgreSqlOperationalDbMigration', '10.0.11');
 
 COMMIT;
 
@@ -97,7 +97,7 @@ CREATE TABLE "Keys" (
 CREATE INDEX "IX_Keys_Use" ON "Keys" ("Use");
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20210106150433_DuendePostgreSqlOperationalMigration', '10.0.8');
+VALUES ('20210106150433_DuendePostgreSqlOperationalMigration', '10.0.11');
 
 COMMIT;
 
@@ -105,7 +105,7 @@ START TRANSACTION;
 CREATE INDEX "IX_PersistedGrants_ConsumedTime" ON "PersistedGrants" ("ConsumedTime");
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20210602110147_PersistedGrantConsumeTimePostgreSqlOperationalMigration', '10.0.8');
+VALUES ('20210602110147_PersistedGrantConsumeTimePostgreSqlOperationalMigration', '10.0.11');
 
 COMMIT;
 
@@ -157,7 +157,7 @@ CREATE INDEX "IX_ServerSideSessions_SessionId" ON "ServerSideSessions" ("Session
 CREATE INDEX "IX_ServerSideSessions_SubjectId" ON "ServerSideSessions" ("SubjectId");
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20220608092054_Duende61Update', '10.0.8');
+VALUES ('20220608092054_Duende61Update', '10.0.11');
 
 COMMIT;
 
@@ -173,7 +173,7 @@ CREATE TABLE "PushedAuthorizationRequests" (
 );
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20240108113635_DuendeV7PostgreSqlOperationalMigration', '10.0.8');
+VALUES ('20240108113635_DuendeV7PostgreSqlOperationalMigration', '10.0.11');
 
 COMMIT;
 
@@ -192,7 +192,7 @@ CREATE INDEX "IX_PushedAuthorizationRequests_ExpiresAtUtc" ON "PushedAuthorizati
 CREATE UNIQUE INDEX "IX_PushedAuthorizationRequests_ReferenceValueHash" ON "PushedAuthorizationRequests" ("ReferenceValueHash");
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20250121150607_DuendeV7.1PostgreSqlOperationalMigration', '10.0.8');
+VALUES ('20250121150607_DuendeV7.1PostgreSqlOperationalMigration', '10.0.11');
 
 COMMIT;
 

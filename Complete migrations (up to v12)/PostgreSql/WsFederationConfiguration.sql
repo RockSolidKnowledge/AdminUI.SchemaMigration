@@ -29,7 +29,7 @@ CREATE UNIQUE INDEX "IX_RelyingParties_Realm" ON "RelyingParties" ("Realm");
 CREATE INDEX "IX_RelyingPartyClaimMappings_RelyingPartyId" ON "RelyingPartyClaimMappings" ("RelyingPartyId");
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20190305133422_PostgreSqlWsfederationInitial', '10.0.8');
+VALUES ('20190305133422_PostgreSqlWsfederationInitial', '10.0.11');
 
 COMMIT;
 
